@@ -1,6 +1,6 @@
 import { randomUUID } from "crypto";
 
-class Instructor {
+export class Instructor {
   public id: string;
   public name: string;
 
