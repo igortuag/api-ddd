@@ -9,14 +9,14 @@ const fakeAnswerRepository: AnswersRepository = {
   }
 }
 
-test('create an answer', () => {
+test('create an answer', async () => {
   const answerQuestion = new AnswerQuestionUseCase(fakeAnswerRepository);
 
-  const answer = answerQuestion.execute({
+  const answer = await answerQuestion.execute({
     instructorId: 'instructor-id',
     questionId: 'question-id',
     content: 'answer content'
   })
 
-  expect(answer).toEqual("answer content")
+  expect(answer.content).toEqual("answer content")
 })
