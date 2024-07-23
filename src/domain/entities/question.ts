@@ -1,4 +1,5 @@
 import { randomUUID } from "crypto";
+import { Slug } from "./value-objects/slug";
 
 interface QuestionProps {
   title: string;
@@ -10,7 +11,7 @@ interface QuestionProps {
 export class Question {
   public id: string;
   public title: string;
-  public slug: string;
+  public slug: Slug;
   public content: string;
   public authorId: string;
 
