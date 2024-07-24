@@ -17,7 +17,7 @@ export class Question {
 
   constructor(props: QuestionProps, id?: string) {
     this.title = props.title;
-    this.slug = props.slug;
+    this.slug = new Slug(props.slug);
     this.content = props.content;
     this.authorId = props.authorId;
     this.id = id ?? randomUUID();
