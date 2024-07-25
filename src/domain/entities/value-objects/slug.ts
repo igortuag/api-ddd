@@ -18,7 +18,7 @@ export class Slug {
       .normalize("NFKD")
       .toLowerCase()
       .trim()
-      .replace(/\s+/g, "")
+      .replace(/\s+/g, "-")
       .replace(/[^\w]+/g, "")
       .replace(/_/g, "-")
       .replace(/-$/g, "");
