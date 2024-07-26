@@ -1,6 +1,7 @@
 import { randomUUID } from "crypto";
+import { Entity } from "../../core/entities/entity";
 
-export class Instructor {
+export class Instructor extends Entity {
   public id: string;
   public name: string;
 
