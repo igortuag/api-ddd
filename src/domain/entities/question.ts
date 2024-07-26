@@ -1,5 +1,6 @@
 import { randomUUID } from "crypto";
 import { Slug } from "./value-objects/slug";
+import { Entity } from "../../core/entities/entity";
 
 interface QuestionProps {
   title: string;
@@ -8,7 +9,7 @@ interface QuestionProps {
   authorId: string;
 }
 
-export class Question {
+export class Question extends Entity {
   public id: string;
   public title: string;
   public slug: Slug;
