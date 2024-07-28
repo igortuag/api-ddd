@@ -7,7 +7,7 @@ export class Entity {
     return this._id
   }
 
-  constructor(id: string) {
+  constructor(id?: string) {
     this._id = id ?? randomUUID()
   }
 }
