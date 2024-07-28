@@ -1,3 +1,5 @@
+import { randomUUID } from "crypto"
+
 export class Entity {
   private _id: string
 
@@ -6,6 +8,6 @@ export class Entity {
   }
 
   constructor(id: string) {
-    this._id = id
+    this._id = id ?? randomUUID()
   }
 }
