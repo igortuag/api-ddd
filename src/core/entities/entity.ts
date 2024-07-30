@@ -8,6 +8,10 @@ export class Entity {
     return this._id
   }
 
+  get content() {
+    return this.props
+  }
+
   constructor(props: any, id?: string) {
     this.props = props
     this._id = id ?? randomUUID()
