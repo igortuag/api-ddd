@@ -7,11 +7,12 @@ interface AnswerProps {
   questionId: string;
 }
 
-export class Answer extends Entity {
-  constructor(
-    props: AnswerProps,
-    id?: string
-  ) {
-    super(props, id)
+export class Answer extends Entity<AnswerProps> {
+  get content() {
+    return this.props.content;
+  }
+
+  constructor(props: AnswerProps, id?: string) {
+    super(props, id);
   }
 }
