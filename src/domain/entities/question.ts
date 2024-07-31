@@ -9,7 +9,7 @@ interface QuestionProps {
   authorId: string;
 }
 
-export class Question extends Entity {
+export class Question extends Entity<QuestionProps> {
   constructor(props: QuestionProps, id?: string) {
     super(props, id);
   }
