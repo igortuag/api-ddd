@@ -4,10 +4,13 @@ import { Entity } from "../../core/entities/entity";
 import { UniqueEntityID } from "./value-objects/unique-entity-id";
 
 interface QuestionProps {
+  authorId: UniqueEntityID;
+  bestAnswerId?: UniqueEntityID;
   title: string;
   slug: string;
   content: string;
-  authorId: UniqueEntityID;
+  createdAt: Date;
+  updatedAt?: Date;
 }
 
 export class Question extends Entity<QuestionProps> {}
