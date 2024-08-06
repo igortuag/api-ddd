@@ -1,7 +1,7 @@
 import { randomUUID } from "crypto";
 import { Slug } from "./value-objects/slug";
 import { Entity } from "../../core/entities/entity";
-import { UniqueEntityID } from "./value-objects/unique-entity-id";
+import { UniqueEntityID } from "../../core/entities/unique-entity-id";
 
 interface QuestionProps {
   authorId: UniqueEntityID;
