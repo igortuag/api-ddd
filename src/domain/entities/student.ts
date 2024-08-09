@@ -1,7 +1,15 @@
 import { randomUUID } from "crypto";
 import { Entity } from "../../core/entities/entity";
+import { Optional } from "../../core/types/optional";
+import { UniqueEntityID } from "../../core/entities/unique-entity-id";
 
 interface StudentProps {
   name: string;
 }
-export class Student extends Entity<StudentProps> {}
+export class Student extends Entity<StudentProps> {
+  static create(props: StudentProps, id?: UniqueEntityID) {
+    const student = new Student(props, id);
+
+    return student;
+  }
+}
