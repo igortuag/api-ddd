@@ -11,6 +11,18 @@ interface AnswerProps {
 }
 
 export class Answer extends Entity<AnswerProps> {
+  get content() {
+    return this.props.content;
+  }
+
+  set content(value: string) { 
+    if (value.length > 2400) {
+      throw new Error("Content is too long");
+    }
+
+    this.props.content = value;
+  }
+
   static create(
     props: Optional<AnswerProps, "createdAt">,
     id?: UniqueEntityID
@@ -24,9 +36,5 @@ export class Answer extends Entity<AnswerProps> {
     );
 
     return question;
-  }
-
-  get content() {
-    return this.props.content;
   }
 }
