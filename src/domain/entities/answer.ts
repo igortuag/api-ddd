@@ -15,11 +15,23 @@ export class Answer extends Entity<AnswerProps> {
     return this.props.content;
   }
 
-  set content(value: string) { 
-    if (value.length > 2400) {
-      throw new Error("Content is too long");
-    }
+  get authorId() {
+    return this.props.authorId;
+  }
 
+  get questionId() {
+    return this.props.questionId;
+  }
+
+  get createdAt() {
+    return this.props.createdAt;
+  }
+
+  get updatedAt() {
+    return this.props.updatedAt;
+  }
+
+  set content(value: string) { 
     this.props.content = value;
   }
 
