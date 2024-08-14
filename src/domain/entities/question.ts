@@ -15,11 +15,45 @@ interface QuestionProps {
 }
 
 export class Question extends Entity<QuestionProps> {
-  static create(props: Optional<QuestionProps, 'createdAt'>, id?: UniqueEntityID) {
-    const question = new Question({
-      ...props,
-      createdAt: new Date(),
-    }, id);
+  get content() {
+    return this.props.content;
+  }
+
+  get authorId() {
+    return this.props.authorId;
+  }
+
+  get bestAnswerId() {
+    return this.props.bestAnswerId;
+  }
+
+  get title() {
+    return this.props.title;
+  }
+
+  get slug() {
+    return this.props.slug;
+  }
+
+  get createdAt() {
+    return this.props.createdAt;
+  }
+
+  get updatedAt() {
+    return this.props.updatedAt;
+  }
+
+  static create(
+    props: Optional<QuestionProps, "createdAt">,
+    id?: UniqueEntityID
+  ) {
+    const question = new Question(
+      {
+        ...props,
+        createdAt: new Date()
+      },
+      id
+    );
 
     return question;
   }
