@@ -3,6 +3,7 @@ import { Slug } from "./value-objects/slug";
 import { Entity } from "../../core/entities/entity";
 import { UniqueEntityID } from "../../core/entities/unique-entity-id";
 import { Optional } from "../../core/types/optional";
+import dayjs from "dayjs";
 
 interface QuestionProps {
   authorId: UniqueEntityID;
@@ -41,6 +42,10 @@ export class Question extends Entity<QuestionProps> {
 
   get updatedAt() {
     return this.props.updatedAt;
+  }
+
+  get isNew() {
+    return dayjs().diff(this.props.createdAt, "days") < 3;
   }
 
   static create(
