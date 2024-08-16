@@ -35,6 +35,10 @@ export class Answer extends Entity<AnswerProps> {
     this.props.content = value;
   }
 
+  get excerpt() { 
+    return this.content.substring(0, 120).trimEnd().concat("...");
+  }
+
   static create(
     props: Optional<AnswerProps, "createdAt">,
     id?: UniqueEntityID
