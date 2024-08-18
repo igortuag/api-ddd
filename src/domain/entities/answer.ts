@@ -31,17 +31,17 @@ export class Answer extends Entity<AnswerProps> {
     return this.props.updatedAt;
   }
 
+  get excerpt() {
+    return this.content.substring(0, 120).trimEnd().concat("...");
+  }
+
   private touch() {
     this.props.updatedAt = new Date();
   }
 
-  set content(value: string) { 
+  set content(value: string) {
     this.props.content = value;
     this.touch();
-  }
-
-  get excerpt() { 
-    return this.content.substring(0, 120).trimEnd().concat("...");
   }
 
   static create(

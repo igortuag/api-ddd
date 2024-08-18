@@ -48,6 +48,19 @@ export class Question extends Entity<QuestionProps> {
     return dayjs().diff(this.props.createdAt, "days") < 3;
   }
 
+  get excerpt() {
+    return this.content.substring(0, 120).trimEnd().concat("...");
+  }
+
+  private touch() {
+    this.props.updatedAt = new Date();
+  }
+
+  set content(value: string) {
+    this.props.content = value;
+    this.touch();
+  }
+
   static create(
     props: Optional<QuestionProps, "createdAt">,
     id?: UniqueEntityID
