@@ -9,7 +9,7 @@ interface QuestionProps {
   authorId: UniqueEntityID;
   bestAnswerId?: UniqueEntityID;
   title: string;
-  slug: string;
+  slug: Slug;
   content: string;
   createdAt: Date;
   updatedAt?: Date;
@@ -56,18 +56,25 @@ export class Question extends Entity<QuestionProps> {
     this.props.updatedAt = new Date();
   }
 
+  set title(value: string) {
+    this.props.title = value;
+    this.props.slug = Slug.createFromText(value);
+    this.touch();
+  }
+
   set content(value: string) {
     this.props.content = value;
     this.touch();
   }
 
   static create(
-    props: Optional<QuestionProps, "createdAt">,
+    props: Optional<QuestionProps, "createdAt" | "slug">,
     id?: UniqueEntityID
   ) {
     const question = new Question(
       {
         ...props,
+        slug: props.slug ?? Slug.createFromText(props.title),
         createdAt: new Date()
       },
       id
