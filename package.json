@@ -12,6 +12,7 @@
   "devDependencies": {
     "@types/node": "^20.14.9",
     "typescript": "^5.5.3",
+    "vite-tsconfig-paths": "^5.0.1",
     "vitest": "^2.0.2"
   },
   "dependencies": {
