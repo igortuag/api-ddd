@@ -17,3 +17,7 @@ DDD (Domain-driven Design)
 - Subdomain (Bounded Contexts)
 - Entities
 - Use Cases
+
+## Clean Architecture 
+
+- Decoupling
