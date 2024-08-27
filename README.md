@@ -21,3 +21,4 @@ DDD (Domain-driven Design)
 ## Clean Architecture 
 
 - Decoupling
+- Dependency inversion
