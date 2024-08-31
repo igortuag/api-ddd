@@ -20,6 +20,8 @@ export class CreateQuestionUseCase {
       content
     });
 
+    await this.questionRepository.create(question);
+
     return { question };
   }
 }
