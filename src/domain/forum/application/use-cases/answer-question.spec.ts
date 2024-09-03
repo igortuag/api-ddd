@@ -3,18 +3,16 @@ import { AnswersRepository } from "../repositories/answer-repository";
 import { InMemoryAnswersRepository } from "test/respositories/in-memory-answers-respository";
 
 let inMemoryAnswerQuestionsRepository: AnswersRepository;
+let sut: AnswerQuestionUseCase;
 
 describe("Create Question", () => {
   beforeEach(() => {
     inMemoryAnswerQuestionsRepository = new InMemoryAnswersRepository();
+    sut = new AnswerQuestionUseCase(inMemoryAnswerQuestionsRepository);
   });
 
-  test("create an answer", async () => {
-    const answerQuestion = new AnswerQuestionUseCase(
-      inMemoryAnswerQuestionsRepository
-    );
-
-    const answer = await answerQuestion.execute({
+  it("should be able create an answer", async () => {
+    const answer = await sut.execute({
       instructorId: "instructor-id",
       questionId: "question-id",
       content: "answer content"
