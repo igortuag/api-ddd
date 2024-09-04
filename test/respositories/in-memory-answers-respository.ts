@@ -1,11 +1,12 @@
 import { AnswersRepository } from "@/domain/forum/application/repositories/answer-repository";
+import { Answer } from "@/domain/forum/enterprise/entities/answer";
 
 export class InMemoryAnswersRepository implements AnswersRepository {
-  private answers: any[] = [];
+  private answers: Answer[] = [];
 
-  async create(question: any): Promise<any> {
-    this.answers.push(question);
+  async create(answer: Answer): Promise<Answer> {
+    this.answers.push(answer);
 
-    return question;
+    return answer;
   }
 }
