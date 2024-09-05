@@ -15,5 +15,15 @@ export class GetQuestionBySlugUseCase {
 
   async execute({
     slug
-  }: GetQuestionBySlugUseCaseRequest): Promise<GetQuestionBySlugUseCaseResponse> {}
+  }: GetQuestionBySlugUseCaseRequest): Promise<GetQuestionBySlugUseCaseResponse> {
+    const question = await this.questionRepository.findBySlug(slug);
+
+    if (!question) {
+      throw new Error("Question not found");
+    }
+
+    return {
+      question
+    };
+  }
 }
