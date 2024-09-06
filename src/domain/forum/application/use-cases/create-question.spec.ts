@@ -19,6 +19,6 @@ describe("CreateQuestionUseCase", () => {
     });
 
     expect(question.id).toBeTruthy();
-    expect(InMemoryQuestionsRepository[0].id).toEqual(question.id);
+    expect(InMemoryQuestionsRepository.items[0].id).toEqual(question.id);
   });
 });

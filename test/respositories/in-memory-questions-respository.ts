@@ -3,18 +3,14 @@ import { Question } from "@/domain/forum/enterprise/entities/question";
 import { Slug } from "@/domain/forum/enterprise/entities/value-objects/slug";
 
 export class InMemoryQuestionsRepository implements QuestionsRepository {
-  private questions: Question[] = [];
+  public items: Question[] = [];
 
   async findBySlug(slug: string): Promise<Question | null> {
-    const slugQuestion = Slug.createFromText(slug);
-
-    return (
-      this.questions.find((question) => question.slug === slugQuestion) ?? null
-    );
+    return this.items.find((question) => question.slug.value === slug) ?? null;
   }
 
   async create(question: any): Promise<Question> {
-    this.questions.push(question);
+    this.items.push(question);
 
     return question;
   }
