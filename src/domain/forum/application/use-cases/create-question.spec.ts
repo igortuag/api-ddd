@@ -2,7 +2,7 @@ import { InMemoryQuestionsRepository } from "test/respositories/in-memory-questi
 import { QuestionsRepository } from "../repositories/question-repository";
 import { CreateQuestionUseCase } from "./create-question";
 
-let inMemoryQuestionsRepository: QuestionsRepository;
+let inMemoryQuestionsRepository: InMemoryQuestionsRepository;
 let sut: CreateQuestionUseCase;
 
 describe("CreateQuestionUseCase", () => {
@@ -16,9 +16,9 @@ describe("CreateQuestionUseCase", () => {
       authorId: "author-id",
       title: "question title",
       content: "question content"
-    });
+    }); 
 
     expect(question.id).toBeTruthy();
-    expect(InMemoryQuestionsRepository.items[0].id).toEqual(question.id);
+    expect(inMemoryQuestionsRepository.items[0].id).toEqual(question.id);
   });
 });
