@@ -4,6 +4,7 @@ import { CreateQuestionUseCase } from "./create-question";
 import { GetQuestionBySlugUseCase } from "./get-question-by-slug";
 import { Question } from "../../enterprise/entities/question";
 import { UniqueEntityID } from "@/core/entities/unique-entity-id";
+import { Slug } from "../../enterprise/entities/value-objects/slug";
 
 let inMemoryQuestionsRepository: InMemoryQuestionsRepository;
 let sut: GetQuestionBySlugUseCase;
@@ -18,7 +19,8 @@ describe("Get Question By Slug", () => {
     const newQuestion = Question.create({
       authorId: new UniqueEntityID(),
       title: "question title",
-      content: "question content"
+      content: "question content",
+      slug: Slug.create("question-title"),
     });
 
     inMemoryQuestionsRepository.items.push(newQuestion);
