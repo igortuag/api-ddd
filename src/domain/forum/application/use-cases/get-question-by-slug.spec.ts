@@ -1,10 +1,5 @@
 import { InMemoryQuestionsRepository } from "test/respositories/in-memory-questions-respository";
-import { QuestionsRepository } from "../repositories/question-repository";
-import { CreateQuestionUseCase } from "./create-question";
 import { GetQuestionBySlugUseCase } from "./get-question-by-slug";
-import { Question } from "../../enterprise/entities/question";
-import { UniqueEntityID } from "@/core/entities/unique-entity-id";
-import { Slug } from "../../enterprise/entities/value-objects/slug";
 import { makeQuestion } from "test/factories/make-question";
 
 let inMemoryQuestionsRepository: InMemoryQuestionsRepository;
