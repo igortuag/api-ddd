@@ -5,15 +5,19 @@ import {
   Question,
   QuestionProps
 } from "@/domain/forum/enterprise/entities/question";
-import { Slug } from "@/domain/forum/enterprise/entities/value-objects/slug";
 
-export function makeQuestion(overrides: Partial<QuestionProps> = {}) {
-  const question = Question.create({
-    authorId: new UniqueEntityID(),
-    title: faker.lorem.words(3),
-    content: faker.lorem.paragraph(),
-    ...overrides
-  });
+export function makeQuestion(overrides: Partial<QuestionProps> = {},
+  id?: UniqueEntityID
+) {
+  const question = Question.create(
+    {
+      authorId: new UniqueEntityID(),
+      title: faker.lorem.words(3),
+      content: faker.lorem.paragraph(),
+      ...overrides
+    },
+    id
+  );
 
   return question;
 }
