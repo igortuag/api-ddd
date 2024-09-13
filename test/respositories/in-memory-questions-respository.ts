@@ -5,6 +5,10 @@ import { Slug } from "@/domain/forum/enterprise/entities/value-objects/slug";
 export class InMemoryQuestionsRepository implements QuestionsRepository {
   public items: Question[] = [];
 
+  async findById(id: string): Promise<Question | null> {
+    return this.items.find((question) => question.id === id) ?? null;
+  }
+
   async findBySlug(slug: string): Promise<Question | null> {
     return this.items.find((question) => question.slug.value === slug) ?? null;
   }
@@ -13,5 +17,9 @@ export class InMemoryQuestionsRepository implements QuestionsRepository {
     this.items.push(question);
 
     return question;
+  }
+
+  async delete(question: Question): Promise<void> {
+    this.items = this.items.filter((item) => item.id !== question.id);
   }
 }
