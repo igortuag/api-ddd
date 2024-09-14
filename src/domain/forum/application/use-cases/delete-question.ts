@@ -3,7 +3,7 @@ import { Question } from "../../enterprise/entities/question";
 import { QuestionsRepository } from "../repositories/question-repository";
 
 interface DeleteQuestionUseCaseRequest {
-  autjorId: string;
+  authorId: string;
   questionId: string;
 }
 
@@ -14,7 +14,7 @@ export class DeleteQuestionUseCase {
 
   async execute({
     questionId,
-    autjorId
+    authorId
   }: DeleteQuestionUseCaseRequest): Promise<DeleteQuestionUseCaseResponse> {
     const question = await this.questionRepository.findById(questionId);
 
@@ -22,7 +22,7 @@ export class DeleteQuestionUseCase {
       throw new Error("Question not found");
     }
 
-    if (question.authorId.toString() !== autjorId) {
+    if (question.authorId.toString() !== authorId) {
       throw new Error("Unauthorized");
     }
 
