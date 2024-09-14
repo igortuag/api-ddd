@@ -13,12 +13,17 @@ export class DeleteQuestionUseCase {
   constructor(private questionRepository: QuestionsRepository) {}
 
   async execute({
-    questionId
+    questionId,
+    autjorId
   }: DeleteQuestionUseCaseRequest): Promise<DeleteQuestionUseCaseResponse> {
     const question = await this.questionRepository.findById(questionId);
 
     if (!question) {
       throw new Error("Question not found");
+    }
+
+    if (question.authorId.toString() !== autjorId) {
+      throw new Error("Unauthorized");
     }
 
     await this.questionRepository.delete(question);
