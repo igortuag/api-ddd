@@ -3,6 +3,7 @@ import { Question } from "../../enterprise/entities/question";
 import { QuestionsRepository } from "../repositories/question-repository";
 
 interface DeleteQuestionUseCaseRequest {
+  autjorId: string;
   questionId: string;
 }
 
@@ -14,7 +15,13 @@ export class DeleteQuestionUseCase {
   async execute({
     questionId
   }: DeleteQuestionUseCaseRequest): Promise<DeleteQuestionUseCaseResponse> {
-    await this.questionRepository.delete(questionId);
+    const question = await this.questionRepository.findById(questionId);
+
+    if (!question) {
+      throw new Error("Question not found");
+    }
+
+    await this.questionRepository.delete(question);
 
     return {};
   }
