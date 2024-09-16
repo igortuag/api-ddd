@@ -2,7 +2,7 @@ import { AnswersRepository } from "../repositories/answer-repository";
 
 interface DeleteAnswerUseCaseRequest {
   authorId: string;
-  answer: string;
+  answerId: string;
 }
 
 interface DeleteAnswerUseCaseResponse {}
@@ -11,20 +11,20 @@ export class DeleteAnswerUseCase {
   constructor(private answerRepository: AnswersRepository) {}
 
   async execute({
-    answer,
+    answerId,
     authorId
   }: DeleteAnswerUseCaseRequest): Promise<DeleteAnswerUseCaseResponse> {
-    const question = await this.answerRepository.findById(answer);
+    const answer = await this.answerRepository.findById(answerId);
 
-    if (!question) {
-      throw new Error("Question not found");
+    if (!answer) {
+      throw new Error("Answer not found");
     }
 
-    if (question.authorId.toString() !== authorId) {
+    if (answer.authorId.toString() !== authorId) {
       throw new Error("Unauthorized");
     }
 
-    await this.answerRepository.delete(question);
+    await this.answerRepository.delete(answer);
 
     return {};
   }
