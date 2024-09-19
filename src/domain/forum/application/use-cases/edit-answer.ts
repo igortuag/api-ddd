@@ -3,7 +3,6 @@ import { AnswersRepository } from "../repositories/answer-repository";
 interface EditAnswerUseCaseRequest {
   authorId: string;
   answerId: string;
-  title: string;
   content: string;
 }
 
@@ -15,7 +14,6 @@ export class EditAnswerUseCase {
   async execute({
     answerId,
     authorId,
-    title,
     content
   }: EditAnswerUseCaseRequest): Promise<EditAnswerUseCaseResponse> {
     const answer = await this.answerRepository.findById(answerId);
