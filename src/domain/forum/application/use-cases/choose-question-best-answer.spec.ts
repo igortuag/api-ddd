@@ -47,4 +47,32 @@ describe("Choose Question Best Answer", () => {
       newAnswer.id
     );
   });
+
+  it("should not be able to choose another user the best question answer", async () => {
+    const newQuestion = makeQuestion(
+      {
+        authorId: new UniqueEntityID("author-1")
+      },
+      new UniqueEntityID("question-1")
+    );
+
+    await inMemoryQuestionsRepository.create(newQuestion);
+
+    const newAnswer = makeAnswer(
+      {
+        questionId: newQuestion.id,
+        authorId: new UniqueEntityID("author-1")
+      },
+      new UniqueEntityID("answer-1")
+    );
+
+    await inMemoryAnswerQuestionsRepository.create(newAnswer);
+
+    await expect(() => {
+      sut.execute({
+        authorId: "author-2",
+        answerId: "answer-1"
+      });
+    }).rejects.toBeInstanceOf(Error);
+  });
 });
