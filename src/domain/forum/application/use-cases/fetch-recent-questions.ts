@@ -17,10 +17,6 @@ export class FetchRecentQuestionsUseCase {
   }: FetchRecentQuestionsUseCaseRequest): Promise<FetchRecentQuestionsUseCaseResponse> {
     const questions = await this.questionRepository.findManyRecent({ page });
 
-    if (!questions?.length) {
-      throw new Error("Questions not found");
-    }
-
     return {
       questions
     };
