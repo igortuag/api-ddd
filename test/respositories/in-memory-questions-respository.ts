@@ -12,6 +12,14 @@ export class InMemoryQuestionsRepository implements QuestionsRepository {
     return this.items.find((question) => question.slug.value === slug) ?? null;
   }
 
+  async findManyRecent({ page }: { page: number }): Promise<Question[]> {
+    const questions = this.items
+      .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
+      .slice((page - 1) * 10, page * 10);
+    
+    return questions;
+  }
+
   async create(question: any): Promise<Question> {
     this.items.push(question);
 
