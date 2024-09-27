@@ -36,7 +36,25 @@ describe("Fetch Recent Questions", () => {
       expect.objectContaining({ createdAt: new Date("2024-09-14") }),
       expect.objectContaining({ createdAt: new Date("2024-09-09") }),
       expect.objectContaining({ createdAt: new Date("2024-09-04") }),
-      expect.objectContaining({ createdAt: new Date("2024-09-01") }),
-    ])
+      expect.objectContaining({ createdAt: new Date("2024-09-01") })
+    ]);
+  });
+
+  it("should be able to fetch recent questions with pagination", async () => {
+    for (let i = 1; i <= 22; i++) {
+      // day in two digits
+      const day = i.toString().padStart(2, "0");
+      await inMemoryQuestionsRepository.create(
+        makeQuestion({ createdAt: new Date(`2024-09-${day}`) })
+      );
+    }
+
+    const { questions } = await sut.execute({ page: 2 });
+
+    expect(questions).toHaveLength(2);
+    expect(questions).toEqual([
+      expect.objectContaining({ createdAt: new Date("2024-09-21") }),
+      expect.objectContaining({ createdAt: new Date("2024-09-22") })
+    ]);
   });
 });
