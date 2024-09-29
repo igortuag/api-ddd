@@ -8,6 +8,10 @@ export class InMemoryAnswersRepository implements AnswersRepository {
     return this.items.find(answer => answer.id.toString() === id) || null;
   }
 
+  async findManyByQuestionId(params: { page: number }): Promise<Answer[]> {
+    return this.items;
+  }
+
   async delete(answer: Answer): Promise<void> {
     this.items = this.items.filter(a => a.id !== answer.id);
   }
