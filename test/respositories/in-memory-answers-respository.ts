@@ -5,19 +5,24 @@ export class InMemoryAnswersRepository implements AnswersRepository {
   public items: Answer[] = [];
 
   async findById(id: string): Promise<Answer | null> {
-    return this.items.find(answer => answer.id.toString() === id) || null;
+    return this.items.find((answer) => answer.id.toString() === id) || null;
   }
 
-  async findManyByQuestionId(params: { page: number }): Promise<Answer[]> {
-    return this.items;
+  async findManyByQuestionId(
+    questionId: string,
+    params: { page: number }
+  ): Promise<Answer[]> {
+    return this.items
+      .filter((answer) => answer.questionId.toString() === questionId)
+      .slice((params.page - 1) * 10, params.page * 10);
   }
 
   async delete(answer: Answer): Promise<void> {
-    this.items = this.items.filter(a => a.id !== answer.id);
+    this.items = this.items.filter((a) => a.id !== answer.id);
   }
 
   async save(answer: Answer): Promise<void> {
-    const index = this.items.findIndex(a => a.id === answer.id);
+    const index = this.items.findIndex((a) => a.id === answer.id);
 
     this.items[index] = answer;
   }
