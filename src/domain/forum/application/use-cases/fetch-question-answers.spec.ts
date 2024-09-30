@@ -12,7 +12,7 @@ describe("Fetch Question Answers", () => {
     sut = new FetchQuestionAnswersUseCase(inMemoryAnswersRepository);
   });
 
-  it("should be able to fetch recent questions", async () => {
+  it("should be able to fetch question answers", async () => {
     await inMemoryAnswersRepository.create(
       makeAnswer({
         questionId: new UniqueEntityID("question-1")
@@ -50,5 +50,22 @@ describe("Fetch Question Answers", () => {
     });
 
     expect(answers).toHaveLength(6);
+  });
+
+  it("should be able to fetch question answers with pagination", async () => {
+    for (let i = 1; i <= 22; i++) {
+      await inMemoryAnswersRepository.create(
+        makeAnswer({
+          questionId: new UniqueEntityID("question-1")
+        })
+      );
+    }
+
+    const { answers } = await sut.execute({
+      page: 2,
+      questionId: "question-1"
+    });
+
+    expect(answers).toHaveLength(2);
   });
 });
