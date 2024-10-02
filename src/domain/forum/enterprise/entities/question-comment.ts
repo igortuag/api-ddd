@@ -4,6 +4,7 @@ import { UniqueEntityID } from "@/core/entities/unique-entity-id";
 
 export interface QuestionCommentProps {
   authorId: UniqueEntityID;
+  questionId: UniqueEntityID;
   content: string;
   createdAt: Date;
   updatedAt?: Date;
