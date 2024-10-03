@@ -4,13 +4,12 @@ import { UniqueEntityID } from "@/core/entities/unique-entity-id";
 
 export interface CommentProps {
   authorId: UniqueEntityID;
-  answerId: UniqueEntityID;
   content: string;
   createdAt: Date;
   updatedAt?: Date;
 }
 
-export class Comment extends Entity<CommentProps> {
+export abstract class Comment extends Entity<CommentProps> {
   get content() {
     return this.props.content;
   }
@@ -34,20 +33,5 @@ export class Comment extends Entity<CommentProps> {
   set content(value: string) {
     this.props.content = value;
     this.touch();
-  }
-
-  static create(
-    props: Optional<CommentProps, "createdAt">,
-    id?: UniqueEntityID
-  ) {
-    const comment = new Comment(
-      {
-        ...props,
-        createdAt: new Date()
-      },
-      id
-    );
-
-    return comment;
   }
 }
