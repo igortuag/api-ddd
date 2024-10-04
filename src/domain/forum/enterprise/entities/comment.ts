@@ -9,7 +9,7 @@ export interface CommentProps {
   updatedAt?: Date;
 }
 
-export abstract class Comment extends Entity<CommentProps> {
+export abstract class Comment<Props extends CommentProps> extends Entity<Props> {
   get content() {
     return this.props.content;
   }
