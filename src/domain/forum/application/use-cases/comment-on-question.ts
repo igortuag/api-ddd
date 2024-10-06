@@ -1,6 +1,7 @@
 import { UniqueEntityID } from "@/core/entities/unique-entity-id";
 import { QuestionsRepository } from "../repositories/question-repository";
 import { QuestionComment } from "../../enterprise/entities/question-comment";
+import { QuestionCommentsRepository } from "../repositories/question-comment-repository";
 
 interface CommentOnQuestionUseCaseRequest {
   authorId: string;
@@ -13,7 +14,10 @@ interface CommentOnQuestionUseCaseResponse {
 }
 
 export class CommentOnQuestionUseCase {
-  constructor(private questionRepository: QuestionsRepository) {}
+  constructor(
+    private questionRepository: QuestionsRepository,
+    questionCommentsRepository: QuestionCommentsRepository
+  ) {}
 
   async execute({
     authorId,
@@ -31,6 +35,8 @@ export class CommentOnQuestionUseCase {
       questionId: new UniqueEntityID(questionId),
       content
     });
+
+    await this.questionRepository.save(question);
 
     return { questionComment };
   }
