@@ -5,12 +5,16 @@ import { QuestionComment } from "@/domain/forum/enterprise/entities/question-com
 export class InMemoryQuestionCommentsRepository implements QuestionCommentsRepository {
   public items: QuestionComment[] = [];
 
-  async findById(questionComment: QuestionComment): Promise<void> {
-    const foundQuestionComment = this.items.find((item) => item.id === questionComment.id);
+  async findById(questionCommentId: string): Promise<QuestionComment> {
+    const foundQuestionComment = this.items.find(
+      (item) => item.id.toString() === questionCommentId
+    );
 
     if (!foundQuestionComment) {
       throw new Error("Question comment not found");
     }
+
+    return foundQuestionComment;
   }
 
   async create(questionComment: QuestionComment): Promise<QuestionComment> {
@@ -20,7 +24,9 @@ export class InMemoryQuestionCommentsRepository implements QuestionCommentsRepos
   }
 
   async delete(questionComment: QuestionComment): Promise<void> {
-    const foundQuestionCommentIndex = this.items.findIndex((item) => item.id === questionComment.id);
+    const foundQuestionCommentIndex = this.items.findIndex(
+      (item) => item.id === questionComment.id
+    );
 
     if (foundQuestionCommentIndex < 0) {
       throw new Error("Question comment not found");
