@@ -26,4 +26,17 @@ describe("Delete question comment", () => {
 
     expect(inMemoryQuestionCommentsRepository.items).toHaveLength(0);
   });
+
+  it("should not be able to delete another user comment on question", async () => {
+    const questionComment = makeQuestionComment();
+
+    await inMemoryQuestionCommentsRepository.create(questionComment);
+
+    await expect(() => {
+      sut.execute({
+        questionCommentId: questionComment.id.toString(),
+        authorId: "another-user-id"
+      });
+    }).rejects.toBeInstanceOf(Error);
+  });
 });
