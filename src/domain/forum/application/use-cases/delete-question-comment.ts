@@ -1,19 +1,19 @@
 import { QuestionCommentsRepository } from "../repositories/question-comment-repository";
 
-interface DeleteQuestionUseCaseRequest {
+interface DeleteQuestionCommentUseCaseRequest {
   authorId: string;
   questionCommentId: string;
 }
 
-interface DeleteQuestionUseCaseResponse {}
+interface DeleteQuestionCommentUseCaseResponse {}
 
-export class DeleteQuestionUseCase {
+export class DeleteQuestionCommentUseCase {
   constructor(private questionCommentsRepository: QuestionCommentsRepository) {}
 
   async execute({
     authorId,
     questionCommentId
-  }: DeleteQuestionUseCaseRequest): Promise<DeleteQuestionUseCaseResponse> {
+  }: DeleteQuestionCommentUseCaseRequest): Promise<DeleteQuestionCommentUseCaseResponse> {
     const questionComment =
       await this.questionCommentsRepository.findById(questionCommentId);
 
