@@ -1,6 +1,5 @@
 import { InMemoryQuestionsRepository } from "test/respositories/in-memory-questions-respository";
 import { makeQuestion } from "test/factories/make-question";
-import { UniqueEntityID } from "@/core/entities/unique-entity-id";
 import { InMemoryQuestionCommentsRepository } from "test/respositories/in-memory-question-comments-repository";
 import { CommentOnQuestionUseCase } from "./comment-on-question";
 
