@@ -1,5 +1,4 @@
 import { InMemoryQuestionsRepository } from "test/respositories/in-memory-questions-respository";
-import { QuestionsRepository } from "../repositories/question-repository";
 import { CreateQuestionUseCase } from "./create-question";
 
 let inMemoryQuestionsRepository: InMemoryQuestionsRepository;
