@@ -1,6 +1,5 @@
 import { InMemoryQuestionsRepository } from "test/respositories/in-memory-questions-respository";
 import { makeQuestion } from "test/factories/make-question";
-import { Slug } from "../../enterprise/entities/value-objects/slug";
 import { FetchRecentQuestionsUseCase } from "./fetch-recent-questions";
 
 let inMemoryQuestionsRepository: InMemoryQuestionsRepository;
