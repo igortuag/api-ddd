@@ -23,6 +23,15 @@ export class InMemoryQuestionCommentsRepository implements QuestionCommentsRepos
     return questionComment;
   }
 
+  async findManyByQuestionId(
+    questionId: string,
+    params: { page: number }
+  ): Promise<QuestionComment[]> {
+    return this.items
+      .filter((questionComment) => questionComment.questionId.toString() === questionId)
+      .slice((params.page - 1) * 10, params.page * 10);
+  }
+
   async delete(questionComment: QuestionComment): Promise<void> {
     const foundQuestionCommentIndex = this.items.findIndex(
       (item) => item.id === questionComment.id
