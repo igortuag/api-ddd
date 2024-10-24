@@ -1,9 +1,7 @@
 import { AnswerCommentsRepository } from "@/domain/forum/application/repositories/answer-comment-repository";
 import { AnswerComment } from "@/domain/forum/enterprise/entities/answer-comment";
 
-export class InMemoryAnswerCommentsRepository
-  implements AnswerCommentsRepository
-{
+export class InMemoryAnswerCommentsRepository implements AnswerCommentsRepository {
   public items: AnswerComment[] = [];
 
   async findById(answerCommentId: string): Promise<AnswerComment> {
@@ -22,6 +20,15 @@ export class InMemoryAnswerCommentsRepository
     this.items.push(answerComment);
 
     return answerComment;
+  }
+
+  async findManyByAnswerId(
+    answerId: string,
+    params: { page: number }
+  ): Promise<AnswerComment[]> {
+    return this.items
+      .filter((answerComment) => answerComment.answerId.toString() === answerId)
+      .slice((params.page - 1) * 10, params.page * 10);
   }
 
   async delete(answerComment: AnswerComment): Promise<void> {
