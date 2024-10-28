@@ -15,3 +15,7 @@ export class Right {
     this.value = value;
   }
 }
+
+export const left = () => {};
+
+export const right = () => {};
