@@ -1,9 +1,21 @@
+// Error
 export class Left<A> {
-  readonly _tag = "Left";
-  constructor(readonly value: A) {}
+  readonly value: any;
+
+  constructor(value: any) {
+    this.value = value;
+  }
 }
 
-export class Right<B> {
-  readonly _tag = "Right";
-  constructor(readonly value: B) {}
+// Success
+export class Right {
+  readonly value: any;
+
+  constructor(value: any) {
+    this.value = value;
+  }
 }
+
+export const left = () => {};
+
+export const right = () => {};
