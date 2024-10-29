@@ -16,6 +16,10 @@ export class Right {
   }
 }
 
-export const left = () => {};
+export const left = (value: any) => {
+  return new Left(value)
+};
 
-export const right = () => {};
+export const right = (value: any) => {
+  return new Right(value)
+};
