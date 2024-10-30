@@ -1,3 +1,4 @@
+import { left, right } from "@/core/either";
 import { AnswerCommentsRepository } from "../repositories/answer-comment-repository";
 
 interface DeleteAnswerCommentUseCaseRequest {
@@ -18,15 +19,15 @@ export class DeleteAnswerCommentUseCase {
       await this.answerCommentsRepository.findById(answerCommentId);
 
     if (!answerComment) {
-      throw new Error("Answer not found");
+      return left("Answer comment not found");
     }
 
     if (answerComment.authorId.toString() !== authorId) {
-      throw new Error("Unauthorized");
+      return left("You are not the author of this comment");
     }
 
     await this.answerCommentsRepository.delete(answerComment);
 
-    return {};
+    return right({})
   }
 }
