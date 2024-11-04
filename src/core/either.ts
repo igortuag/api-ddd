@@ -5,6 +5,13 @@ export class Left<L> {
   constructor(value: L) {
     this.value = value;
   }
+
+  isLeft() {
+    return true;
+  }
+  isRight() {
+    return false;
+  }
 }
 
 // Success
@@ -14,13 +21,19 @@ export class Right<R> {
   constructor(value: R) {
     this.value = value;
   }
+
+  isRight() {
+    return true;
+  }
+  isLeft() {
+    return false;
+  }
 }
 
 export type Either<L, R> = Left<L> | Right<R>;
 
-
 export const left = <L, R>(value: L): Either<L, R> => {
-  return new Left(value)
+  return new Left(value);
 };
 
 export const right = <L, R>(value: R): Either<L, R> => {
