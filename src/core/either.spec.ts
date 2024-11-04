@@ -1,13 +1,15 @@
 import { left, right } from "./either";
 
 test("success result", () => {
-  const success = right("success");
+  const result = right("success");
 
-  expect(success.value).toEqual("success");
+  expect(result.isRight).toBe(true);
+  expect(result.isLeft).toBe(false);
 });
 
 test("error result", () => {
-  const error = left("error");
+  const result = left("error");
 
-  expect(error.value).toEqual("error");
+  expect(result.isRight).toBe(false);
+  expect(result.isLeft).toBe(true);
 });
