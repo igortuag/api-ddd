@@ -6,8 +6,11 @@ export class Left<L> {
     this.value = value;
   }
 
-  isLeft(): this is Left<L> {
+  isLeft() {
     return true;
+  }
+  isRight() {
+    return false;
   }
 }
 
@@ -19,16 +22,18 @@ export class Right<R> {
     this.value = value;
   }
 
-  isRight(): this is Right<R> {
+  isRight() {
     return true;
+  }
+  isLeft() {
+    return false;
   }
 }
 
 export type Either<L, R> = Left<L> | Right<R>;
 
-
 export const left = <L, R>(value: L): Either<L, R> => {
-  return new Left(value)
+  return new Left(value);
 };
 
 export const right = <L, R>(value: R): Either<L, R> => {
