@@ -1,15 +1,16 @@
 import { AnswersRepository } from "../repositories/answer-repository";
 import { Question } from "../../enterprise/entities/question";
 import { QuestionsRepository } from "../repositories/question-repository";
+import { Either, right } from "@/core/either";
 
 interface ChooseBestQuestionAnswerUseCaseRequest {
   answerId: string;
   authorId: string;
 }
 
-interface ChooseBestQuestionAnswerUseCaseResponse {
+type ChooseBestQuestionAnswerUseCaseResponse = Either<null, {
   question: Question;
-}
+}>
 
 export class ChooseBestQuestionAnswerUseCase {
   constructor(
@@ -43,6 +44,6 @@ export class ChooseBestQuestionAnswerUseCase {
 
     await this.questionsRepository.save(question);
 
-    return { question };
+    return right({ question });
   }
 }
