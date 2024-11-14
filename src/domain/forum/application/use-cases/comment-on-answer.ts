@@ -2,6 +2,7 @@ import { UniqueEntityID } from "@/core/entities/unique-entity-id";
 import { AnswersRepository } from "../repositories/answer-repository";
 import { AnswerComment } from "../../enterprise/entities/answer-comment";
 import { AnswerCommentsRepository } from "../repositories/answer-comment-repository";
+import { Either, right } from "@/core/either";
 
 interface CommentOnAnswerUseCaseRequest {
   authorId: string;
@@ -9,9 +10,12 @@ interface CommentOnAnswerUseCaseRequest {
   content: string;
 }
 
-interface CommentOnAnswerUseCaseResponse {
-  answerComment: AnswerComment;
-}
+type CommentOnAnswerUseCaseResponse = Either<
+  null,
+  {
+    answerComment: AnswerComment;
+  }
+>;
 
 export class CommentOnAnswerUseCase {
   constructor(
@@ -38,6 +42,6 @@ export class CommentOnAnswerUseCase {
 
     await this.answerCommentsRepository.create(answerComment);
 
-    return { answerComment };
+    return right({ answerComment });
   }
 }
