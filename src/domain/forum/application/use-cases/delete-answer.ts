@@ -1,3 +1,4 @@
+import { Either, right } from './../../../../core/either';
 import { AnswersRepository } from "../repositories/answer-repository";
 
 interface DeleteAnswerUseCaseRequest {
@@ -5,7 +6,7 @@ interface DeleteAnswerUseCaseRequest {
   answerId: string;
 }
 
-interface DeleteAnswerUseCaseResponse {}
+type DeleteAnswerUseCaseResponse = Either<null, {}>
 
 export class DeleteAnswerUseCase {
   constructor(private answerRepository: AnswersRepository) {}
@@ -26,6 +27,6 @@ export class DeleteAnswerUseCase {
 
     await this.answerRepository.delete(answer);
 
-    return {};
+    return right({})
   }
 }
