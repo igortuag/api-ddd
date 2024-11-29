@@ -1,14 +1,16 @@
 import { AnswersRepository } from "../repositories/answer-repository";
 import { Question } from "../../enterprise/entities/question";
 import { QuestionsRepository } from "../repositories/question-repository";
-import { Either, right } from "@/core/either";
+import { Either, left, right } from "@/core/either";
+import { NotAllowedError } from "./errors/not-allowed-error";
+import { ResourceNotFoundError } from "./errors/resource-not-found-error";
 
 interface ChooseBestQuestionAnswerUseCaseRequest {
   answerId: string;
   authorId: string;
 }
 
-type ChooseBestQuestionAnswerUseCaseResponse = Either<null, {
+type ChooseBestQuestionAnswerUseCaseResponse = Either<NotAllowedError | ResourceNotFoundError, {
   question: Question;
 }>
 
@@ -33,11 +35,11 @@ export class ChooseBestQuestionAnswerUseCase {
     );
 
     if (!question) {
-      throw new Error("Question not found");
+      return left(new ResourceNotFoundError("Question"));
     }
 
     if (question.authorId.toString() !== authorId) {
-      throw new Error("You are not the author of this question");
+      return left(new NotAllowedError());
     }
 
     question.bestAnswerId = answer.id;
