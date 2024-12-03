@@ -52,12 +52,12 @@ describe("Fetch Answer Comments", () => {
     );
     
 
-    const { answerComments } = await sut.execute({
+    const results = await sut.execute({
       page: 1,
       answerId: "answer-1"
     });
 
-    expect(answerComments).toHaveLength(7);
+    expect(results.value).toHaveLength(7);
   });
 
   it("should be able to fetch answer comments with pagination", async () => {
@@ -69,11 +69,11 @@ describe("Fetch Answer Comments", () => {
       );
     }
 
-    const { answerComments } = await sut.execute({
+    const results = await sut.execute({
       page: 2,
       answerId: "answer-1"
     });
 
-    expect(answerComments).toHaveLength(2);
+    expect(results.value).toHaveLength(2);
   });
 });
