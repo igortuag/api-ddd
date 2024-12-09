@@ -57,7 +57,7 @@ describe("Fetch Question Comments", () => {
       questionId: "question-1"
     });
 
-    expect(value).toHaveLength(7);
+    expect(value?.questionComments).toHaveLength(7);
   });
 
   it("should be able to fetch question comments with pagination", async () => {
@@ -74,6 +74,6 @@ describe("Fetch Question Comments", () => {
       questionId: "question-1"
     });
 
-    expect(value).toHaveLength(2);
+    expect(value?.questionComments).toHaveLength(2);
   });
 });
