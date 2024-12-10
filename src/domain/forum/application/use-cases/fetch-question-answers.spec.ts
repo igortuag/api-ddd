@@ -49,7 +49,7 @@ describe("Fetch Question Answers", () => {
       questionId: "question-1"
     });
 
-    expect(results.value).toHaveLength(6);
+    expect(results.value?.answers).toHaveLength(6);
   });
 
   it("should be able to fetch question answers with pagination", async () => {
@@ -66,6 +66,6 @@ describe("Fetch Question Answers", () => {
       questionId: "question-1"
     });
 
-    expect(results.value).toHaveLength(2);
+    expect(results.value?.answers).toHaveLength(2);
   });
 });
