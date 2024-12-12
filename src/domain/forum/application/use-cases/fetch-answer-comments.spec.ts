@@ -57,7 +57,7 @@ describe("Fetch Answer Comments", () => {
       answerId: "answer-1"
     });
 
-    expect(results.value).toHaveLength(7);
+    expect(results.value?.answerComments).toHaveLength(7);
   });
 
   it("should be able to fetch answer comments with pagination", async () => {
@@ -74,6 +74,6 @@ describe("Fetch Answer Comments", () => {
       answerId: "answer-1"
     });
 
-    expect(results.value).toHaveLength(2);
+    expect(results.value?.answerComments).toHaveLength(2);
   });
 });
