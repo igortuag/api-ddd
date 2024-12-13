@@ -12,6 +12,8 @@ let sut: ChooseBestQuestionAnswerUseCase;
 describe("Choose Question Best Answer", () => {
   beforeEach(() => {
     inMemoryQuestionsRepository = new InMemoryQuestionsRepository();
+    inMemoryAnswerQuestionsRepository = new InMemoryAnswersRepository();
+    
     sut = new ChooseBestQuestionAnswerUseCase(
       inMemoryQuestionsRepository,
       inMemoryAnswerQuestionsRepository
