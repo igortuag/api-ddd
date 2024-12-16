@@ -70,7 +70,7 @@ describe("Fetch Answer Comments", () => {
     }
 
     const results = await sut.execute({
-      page: 2,
+      page: 3,
       answerId: "answer-1"
     });
 

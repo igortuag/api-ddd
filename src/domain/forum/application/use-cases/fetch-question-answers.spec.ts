@@ -62,7 +62,7 @@ describe("Fetch Question Answers", () => {
     }
 
     const results = await sut.execute({
-      page: 2,
+      page: 3,
       questionId: "question-1"
     });
 
