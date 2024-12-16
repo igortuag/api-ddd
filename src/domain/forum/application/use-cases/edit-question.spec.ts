@@ -38,21 +38,21 @@ describe("EditQuestionUseCase", () => {
     const newQuestion = makeQuestion(
       {
         authorId: new UniqueEntityID("author-1"),
-        title: "old title",
+        title: "old title"
       },
       new UniqueEntityID("question-1")
     );
 
     await inMemoryQuestionsRepository.create(newQuestion);
 
-    await expect(
-      sut.execute({
-        questionId: "question-1",
-        authorId: "author-2",
-        content: "new content",
-        title: "new title"
-      })
-    ).rejects.toBeInstanceOf(Error);
+    const result = await sut.execute({
+      questionId: "question-1",
+      authorId: "author-2",
+      content: "new content",
+      title: "new title"
+    });
+
+    expect(result.isLeft()).toBeTruthy();
 
     const question = await inMemoryQuestionsRepository.findById("question-1");
 
