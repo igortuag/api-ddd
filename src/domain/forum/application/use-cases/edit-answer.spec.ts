@@ -25,7 +25,7 @@ describe("EditAnswerUseCase", () => {
     await sut.execute({
       answerId: "answer-1",
       authorId: "author-1",
-      content: "new content",
+      content: "new content"
     });
 
     const answer = await inMemoryAnswersRepository.findById("answer-1");
@@ -44,13 +44,13 @@ describe("EditAnswerUseCase", () => {
 
     await inMemoryAnswersRepository.create(newAnswer);
 
-    await expect(
-      sut.execute({
-        answerId: "answer-1",
-        authorId: "author-2",
-        content: "new content",
-      })
-    ).rejects.toBeInstanceOf(Error);
+    const result = await sut.execute({
+      answerId: "answer-1",
+      authorId: "author-2",
+      content: "new content"
+    });
+
+    expect(result.isLeft()).toBeTruthy();
 
     const answer = await inMemoryAnswersRepository.findById("answer-1");
 
