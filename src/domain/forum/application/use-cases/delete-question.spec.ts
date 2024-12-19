@@ -40,12 +40,12 @@ describe("DeleteQuestionUseCase", () => {
 
     await inMemoryQuestionsRepository.create(newQuestion);
 
-    await expect(
-      sut.execute({
-        questionId: "question-1",
-        authorId: "author-2"
-      })
-    ).rejects.toBeInstanceOf(Error);
+    const result = await sut.execute({
+      questionId: "question-1",
+      authorId: "author-2"
+    });
+
+    expect(result.isLeft()).toBeTruthy();
 
     expect(inMemoryQuestionsRepository.items).toHaveLength(1);
   });
