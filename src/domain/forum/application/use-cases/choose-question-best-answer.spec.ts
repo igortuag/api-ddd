@@ -4,6 +4,7 @@ import { UniqueEntityID } from "@/core/entities/unique-entity-id";
 import { InMemoryAnswersRepository } from "test/respositories/in-memory-answers-respository";
 import { ChooseBestQuestionAnswerUseCase } from "./choose-question-best-answer";
 import { makeAnswer } from "test/factories/make-answer";
+import { NotAllowedError } from "./errors/not-allowed-error";
 
 let inMemoryAnswerQuestionsRepository: InMemoryAnswersRepository;
 let inMemoryQuestionsRepository: InMemoryQuestionsRepository;
@@ -76,5 +77,6 @@ describe("Choose Question Best Answer", () => {
     });
 
     expect(result.isLeft()).toBeTruthy();
+    expect(result.value).toBeInstanceOf(NotAllowedError);
   });
 });
