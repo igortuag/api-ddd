@@ -40,13 +40,11 @@ describe("DeleteAnswerUseCase", () => {
 
     await inMemoryAnswersRepository.create(newAnswer);
 
-    await expect(
-      sut.execute({
-        answerId: "answer-1",
-        authorId: "author-2"
-      })
-    ).rejects.toBeInstanceOf(Error);
+    const result = await sut.execute({
+      answerId: "answer-1",
+      authorId: "author-2"
+    });
 
-    expect(inMemoryAnswersRepository.items).toHaveLength(1);
+    expect(result.isLeft()).toBe(true);
   });
 });
