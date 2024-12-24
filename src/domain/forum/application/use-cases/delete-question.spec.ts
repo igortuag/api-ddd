@@ -2,6 +2,7 @@ import { InMemoryQuestionsRepository } from "test/respositories/in-memory-questi
 import { DeleteQuestionUseCase } from "./delete-question";
 import { makeQuestion } from "test/factories/make-question";
 import { UniqueEntityID } from "@/core/entities/unique-entity-id";
+import { NotAllowedError } from "./errors/not-allowed-error";
 
 let inMemoryQuestionsRepository: InMemoryQuestionsRepository;
 let sut: DeleteQuestionUseCase;
@@ -46,6 +47,7 @@ describe("DeleteQuestionUseCase", () => {
     });
 
     expect(result.isLeft()).toBeTruthy();
+    expect(result.value).toBeInstanceOf(NotAllowedError);
 
     expect(inMemoryQuestionsRepository.items).toHaveLength(1);
   });
