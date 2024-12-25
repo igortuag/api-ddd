@@ -2,6 +2,7 @@ import { InMemoryAnswersRepository } from "test/respositories/in-memory-answers-
 import { EditAnswerUseCase } from "./edit-answer";
 import { makeAnswer } from "test/factories/make-answer";
 import { UniqueEntityID } from "@/core/entities/unique-entity-id";
+import { NotAllowedError } from "./errors/not-allowed-error";
 
 let inMemoryAnswersRepository: InMemoryAnswersRepository;
 let sut: EditAnswerUseCase;
@@ -51,6 +52,7 @@ describe("EditAnswerUseCase", () => {
     });
 
     expect(result.isLeft()).toBeTruthy();
+    expect(result.value).toBeInstanceOf(NotAllowedError);
 
     const answer = await inMemoryAnswersRepository.findById("answer-1");
 
