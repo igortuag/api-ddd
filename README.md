@@ -22,3 +22,13 @@ DDD (Domain-driven Design)
 
 - Decoupling
 - Dependency inversion
+
+# Concepts
+
+- Aggregate
+- WatchedList
+
+## Examples
+
+- Oder -> OrderItem[]
+- Order -> Shipping
