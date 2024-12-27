@@ -33,4 +33,10 @@ DDD (Domain-driven Design)
 - Oder -> OrderItem[]
 - Order -> Shipping
 
-- Question -> Attachment (Aggregate)
+- Question -> Attachment[] (Aggregate)
+
+### Create
+
+- Title
+- Content
+- Attachment
