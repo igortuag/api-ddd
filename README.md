@@ -40,3 +40,8 @@ DDD (Domain-driven Design)
 - Title
 - Content
 - Attachment
+
+### Edit
+
+- Title and content is simple (just updated)
+- Attachment is complex: (delete, add, update)
