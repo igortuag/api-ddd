@@ -8,5 +8,18 @@ interface QuestionAttachmentProps {
 }
 
 export class QuestionAttachment extends Entity<QuestionAttachmentProps> {
-  
+  get questionId() {
+    return this.props.questionId;
+  }
+
+  get attachmentId() {
+    return this.props.attachmentId;
+  }
+
+  static create(
+    props: QuestionAttachmentProps,
+    id?: UniqueEntityID
+  ): QuestionAttachment {
+    return new QuestionAttachment(props, id);
+  }
 }
