@@ -11,7 +11,7 @@ export interface QuestionProps {
   title: string;
   slug: Slug;
   content: string;
-  attachment: QuestionAttachment[];
+  attachments: QuestionAttachment[];
   createdAt: Date;
   updatedAt?: Date;
 }
@@ -37,8 +37,8 @@ export class Question extends AggregateRoot<QuestionProps> {
     return this.props.slug;
   }
 
-  get attachment() {
-    return this.props.attachment;
+  get attachments() {
+    return this.props.attachments;
   }
 
   get createdAt() {
@@ -73,7 +73,7 @@ export class Question extends AggregateRoot<QuestionProps> {
   }
 
   set attachments(attachments: QuestionAttachment[]) {
-    this.props.attachment = attachments;
+    this.props.attachments = attachments;
   }
 
   set bestAnswerId(value: UniqueEntityID) {
@@ -82,14 +82,14 @@ export class Question extends AggregateRoot<QuestionProps> {
   }
 
   static create(
-    props: Optional<QuestionProps, "createdAt" | "slug" | "attachment">,
+    props: Optional<QuestionProps, "createdAt" | "slug" | "attachments">,
     id?: UniqueEntityID
   ) {
     const question = new Question(
       {
         ...props,
         slug: props.slug ?? Slug.createFromText(props.title),
-        attachment: props.attachment ?? [],
+        attachments: props.attachments ?? [],
         createdAt: new Date()
       },
       id
