@@ -20,4 +20,13 @@ describe("WatchedList", () => {
     expect(list.currentItems).toHaveLength(4);
     expect(list.getNewItems()).toEqual([4]);
   })
+
+    it("should be able to remove items from the list", () => {
+      const list = new NumberWatchedList([1, 2, 3]);
+
+      list.remove(2);
+
+      expect(list.currentItems).toHaveLength(2);
+      expect(list.getRemovedItems()).toEqual([2]);
+    });
 });
