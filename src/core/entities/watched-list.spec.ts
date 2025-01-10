@@ -18,6 +18,6 @@ describe("WatchedList", () => {
     list.add(4);
 
     expect(list.currentItems).toHaveLength(4);
-    expect(list.getNewItems()).toEqual(4);
+    expect(list.getNewItems()).toEqual([4]);
   })
 });
