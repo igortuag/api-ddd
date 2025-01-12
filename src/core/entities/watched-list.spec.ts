@@ -8,8 +8,8 @@ class NumberWatchedList extends WatchedList<number> {
 
 describe("WatchedList", () => {
   it("should be able to create a watched list with initial items", () => {
-    const list = new NumberWatchedList([1, 2, 3]);
-    expect(list.currentItems).toHaveLength(3);
+    const list = new NumberWatchedList([1, 2, 3, 4]);
+    expect(list.currentItems).toHaveLength(4);
   });
 
   it("should be able to add new items to the list", () => {
