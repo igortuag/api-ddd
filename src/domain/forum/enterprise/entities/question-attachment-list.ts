@@ -3,6 +3,6 @@ import { QuestionAttachment } from "./answer-attatchment";
 
 export class QuestionAttachmentList extends WatchedList<QuestionAttachment> {
   compareItems(a: QuestionAttachment, b: QuestionAttachment): boolean {
-    throw new Error("Method not implemented.");
+    return a.attachmentId === b.attachmentId;
   }
 }
