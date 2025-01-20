@@ -3,6 +3,8 @@ import { Question } from "../../enterprise/entities/question";
 import { QuestionsRepository } from "../repositories/question-repository";
 import { ResourceNotFoundError } from "./errors/resource-not-found-error";
 import { NotAllowedError } from "./errors/not-allowed-error";
+import { QuestionAttachmentsRepository } from "../repositories/question-attachments-repository";
+import { QuestionAttachmentList } from "../../enterprise/entities/question-attachment-list";
 
 interface EditQuestionUseCaseRequest {
   authorId: string;
@@ -20,7 +22,10 @@ type EditQuestionUseCaseResponse = Either<
 >;
 
 export class EditQuestionUseCase {
-  constructor(private questionRepository: QuestionsRepository) {}
+  constructor(
+    private questionRepository: QuestionsRepository,
+    private questionAttachmentsRepository: QuestionAttachmentsRepository
+  ) {}
 
   async execute({
     questionId,
@@ -38,6 +43,13 @@ export class EditQuestionUseCase {
     if (question.authorId.toString() !== authorId) {
       return left(new NotAllowedError("edit question"));
     }
+
+    const currentQuestionAttachments =
+      await this.questionAttachmentsRepository.findManyByQuestionId(questionId);
+
+    const questionAttachmentList = new QuestionAttachmentList(
+      currentQuestionAttachments
+    );
 
     question.title = title;
     question.content = content;
