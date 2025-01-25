@@ -3,6 +3,7 @@ import { EditQuestionUseCase } from "./edit-question";
 import { makeQuestion } from "test/factories/make-question";
 import { UniqueEntityID } from "@/core/entities/unique-entity-id";
 import { InMemoryQuestionAttachmentsRepository } from "test/respositories/in-memory-question-attachments-repository";
+import { makeQuestionAttachment } from "test/factories/make-question-attachment";
 
 let inMemoryQuestionsRepository: InMemoryQuestionsRepository;
 let inMemoryQuestionAttachmentsRepository: InMemoryQuestionAttachmentsRepository;
@@ -51,6 +52,17 @@ describe("EditQuestionUseCase", () => {
     );
 
     await inMemoryQuestionsRepository.create(newQuestion);
+
+    inMemoryQuestionAttachmentsRepository.items.push(
+      makeQuestionAttachment({
+        questionId: newQuestion.id,
+        attachmentId: new UniqueEntityID("1")
+      }),
+      makeQuestionAttachment({
+        questionId: newQuestion.id,
+        attachmentId: new UniqueEntityID("2")
+      })
+    )
 
     const result = await sut.execute({
       questionId: "question-1",
