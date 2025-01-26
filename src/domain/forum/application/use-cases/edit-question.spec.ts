@@ -68,7 +68,8 @@ describe("EditQuestionUseCase", () => {
       questionId: "question-1",
       authorId: "author-2",
       content: "new content",
-      title: "new title"
+      title: "new title",
+      attachmentsIds: ['1', '3']
     });
 
     expect(result.isLeft()).toBeTruthy();
