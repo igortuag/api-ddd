@@ -12,7 +12,8 @@ let sut: EditQuestionUseCase;
 describe("EditQuestionUseCase", () => {
   beforeEach(() => {
     inMemoryQuestionsRepository = new InMemoryQuestionsRepository();
-    inMemoryQuestionAttachmentsRepository = new InMemoryQuestionAttachmentsRepository();
+    inMemoryQuestionAttachmentsRepository =
+      new InMemoryQuestionAttachmentsRepository();
 
     sut = new EditQuestionUseCase(
       inMemoryQuestionsRepository,
@@ -30,16 +31,38 @@ describe("EditQuestionUseCase", () => {
 
     await inMemoryQuestionsRepository.create(newQuestion);
 
+    inMemoryQuestionAttachmentsRepository.items.push(
+      makeQuestionAttachment({
+        questionId: newQuestion.id,
+        attachmentId: new UniqueEntityID("1")
+      }),
+      makeQuestionAttachment({
+        questionId: newQuestion.id,
+        attachmentId: new UniqueEntityID("2")
+      })
+    );
+
     await sut.execute({
       questionId: "question-1",
       authorId: "author-1",
       content: "new content",
-      title: "new title"
+      title: "new title",
+      attachmentsIds: ["1", "3"]
     });
 
     const question = await inMemoryQuestionsRepository.findById("question-1");
 
     expect(question?.title).toBe("new title");
+
+    expect(
+      inMemoryQuestionsRepository.items[0].attachments.currentItems
+    ).toHaveLength(2);
+    expect(
+      inMemoryQuestionsRepository.items[0].attachments.currentItems
+    ).toEqual([
+      expect.objectContaining({ attachmentId: new UniqueEntityID("1") }),
+      expect.objectContaining({ attachmentId: new UniqueEntityID("3") })
+    ]);
   });
 
   it("should not be able to edit a question if the author is different", async () => {
@@ -62,14 +85,14 @@ describe("EditQuestionUseCase", () => {
         questionId: newQuestion.id,
         attachmentId: new UniqueEntityID("2")
       })
-    )
+    );
 
     const result = await sut.execute({
       questionId: "question-1",
       authorId: "author-2",
       content: "new content",
       title: "new title",
-      attachmentsIds: ['1', '3']
+      attachmentsIds: ["1", "3"]
     });
 
     expect(result.isLeft()).toBeTruthy();
