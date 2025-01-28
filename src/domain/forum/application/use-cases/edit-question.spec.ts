@@ -76,23 +76,12 @@ describe("EditQuestionUseCase", () => {
 
     await inMemoryQuestionsRepository.create(newQuestion);
 
-    inMemoryQuestionAttachmentsRepository.items.push(
-      makeQuestionAttachment({
-        questionId: newQuestion.id,
-        attachmentId: new UniqueEntityID("1")
-      }),
-      makeQuestionAttachment({
-        questionId: newQuestion.id,
-        attachmentId: new UniqueEntityID("2")
-      })
-    );
-
     const result = await sut.execute({
       questionId: "question-1",
       authorId: "author-2",
       content: "new content",
       title: "new title",
-      attachmentsIds: ["1", "3"]
+      attachmentsIds: []
     });
 
     expect(result.isLeft()).toBeTruthy();
