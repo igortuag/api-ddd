@@ -1,5 +1,5 @@
 import { QuestionAttachmentsRepository } from "@/domain/forum/application/repositories/question-attachments-repository";
-import { QuestionAttachment } from "@/domain/forum/enterprise/entities/answer-attatchment";
+import { QuestionAttachment } from "@/domain/forum/enterprise/entities/answer-attachment";
 
 export class InMemoryQuestionAttachmentsRepository
   implements QuestionAttachmentsRepository
