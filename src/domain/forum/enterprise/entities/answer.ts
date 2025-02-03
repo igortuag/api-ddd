@@ -1,13 +1,15 @@
 import { Entity } from '@/core/entities/entity'
 import { Optional } from '@/core/types/optional'
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
+import { AnswerAttachment } from './answer-attachment';
 
 export interface AnswerProps {
-  authorId: UniqueEntityID
-  questionId: UniqueEntityID
-  content: string
-  createdAt: Date
-  updatedAt?: Date
+  authorId: UniqueEntityID;
+  questionId: UniqueEntityID;
+  attachments: AnswerAttachment;
+  content: string;
+  createdAt: Date;
+  updatedAt?: Date;
 }
 
 export class Answer extends Entity<AnswerProps> {
@@ -21,6 +23,10 @@ export class Answer extends Entity<AnswerProps> {
 
   get questionId() {
     return this.props.questionId
+  }
+
+  get attachments() {
+    return this.props.attachments
   }
 
   get createdAt() {
@@ -41,6 +47,11 @@ export class Answer extends Entity<AnswerProps> {
 
   set content(value: string) {
     this.props.content = value
+    this.touch()
+  }
+
+  set attachments(value: AnswerAttachment) {
+    this.props.attachments = value
     this.touch()
   }
 
