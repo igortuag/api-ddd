@@ -1,12 +1,12 @@
-import { Entity } from '@/core/entities/entity'
-import { Optional } from '@/core/types/optional'
-import { UniqueEntityID } from '@/core/entities/unique-entity-id'
-import { AnswerAttachment } from './answer-attachment';
+import { Entity } from "@/core/entities/entity";
+import { Optional } from "@/core/types/optional";
+import { UniqueEntityID } from "@/core/entities/unique-entity-id";
+import { AnswerAttachmentList } from "./answer-attachment-list";
 
 export interface AnswerProps {
   authorId: UniqueEntityID;
   questionId: UniqueEntityID;
-  attachments: AnswerAttachment;
+  attachments: AnswerAttachmentList;
   content: string;
   createdAt: Date;
   updatedAt?: Date;
@@ -14,59 +14,60 @@ export interface AnswerProps {
 
 export class Answer extends Entity<AnswerProps> {
   get content() {
-    return this.props.content
+    return this.props.content;
   }
 
   get authorId() {
-    return this.props.authorId
+    return this.props.authorId;
   }
 
   get questionId() {
-    return this.props.questionId
+    return this.props.questionId;
   }
 
   get attachments() {
-    return this.props.attachments
+    return this.props.attachments;
   }
 
   get createdAt() {
-    return this.props.createdAt
+    return this.props.createdAt;
   }
 
   get updatedAt() {
-    return this.props.updatedAt
+    return this.props.updatedAt;
   }
 
   get excerpt() {
-    return this.content.substring(0, 120).trimEnd().concat('...')
+    return this.content.substring(0, 120).trimEnd().concat("...");
   }
 
   private touch() {
-    this.props.updatedAt = new Date()
+    this.props.updatedAt = new Date();
   }
 
   set content(value: string) {
-    this.props.content = value
-    this.touch()
+    this.props.content = value;
+    this.touch();
   }
 
-  set attachments(value: AnswerAttachment) {
-    this.props.attachments = value
-    this.touch()
+  set attachments(value: AnswerAttachmentList) {
+    this.props.attachments = value;
+    this.touch();
   }
 
   static create(
-    props: Optional<AnswerProps, 'createdAt'>,
-    id?: UniqueEntityID,
+    props: Optional<AnswerProps, "createdAt" | "attachments">,
+    id?: UniqueEntityID
   ) {
     const question = new Answer(
       {
         ...props,
-        createdAt: new Date(),
+        attachments: props.attachments ?? new AnswerAttachmentList(),
+        createdAt: new Date()
       },
-      id,
-    )
+      id
+    );
 
-    return question
+    return question;
   }
 }
