@@ -31,7 +31,7 @@ export class AnswerQuestionUseCase {
     const answer = Answer.create({
       content,
       authorId: new UniqueEntityID(instructorId),
-      questionId: new UniqueEntityID(questionId)
+      questionId: new UniqueEntityID(questionId),
     });
 
     const answerAttachments = attachmentsIds.map((attachmentId) => {
@@ -41,7 +41,7 @@ export class AnswerQuestionUseCase {
       });
     });
 
-    answer.attachments = new AnswerAttachmentList(answerAttachments);
+    answer.attachmentsIds = new AnswerAttachmentList(answerAttachments);
 
     await this.answersRepository.create(answer);
 
