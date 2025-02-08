@@ -6,7 +6,7 @@ import { AnswerAttachmentList } from "./answer-attachment-list";
 export interface AnswerProps {
   authorId: UniqueEntityID;
   questionId: UniqueEntityID;
-  attachmentsIds: AnswerAttachmentList;
+  attachments: AnswerAttachmentList;
   content: string;
   createdAt: Date;
   updatedAt?: Date;
@@ -25,8 +25,8 @@ export class Answer extends Entity<AnswerProps> {
     return this.props.questionId;
   }
 
-  get attachmentsIds() {
-    return this.props.attachmentsIds;
+  get attachments() {
+    return this.props.attachments;
   }
 
   get createdAt() {
@@ -51,18 +51,18 @@ export class Answer extends Entity<AnswerProps> {
   }
 
   set attachmentsIds(value: AnswerAttachmentList) {
-    this.props.attachmentsIds = value;
+    this.props.attachments = value;
     this.touch();
   }
 
   static create(
-    props: Optional<AnswerProps, "createdAt" | "attachmentsIds">,
+    props: Optional<AnswerProps, "createdAt" | "attachments">,
     id?: UniqueEntityID
   ) {
     const question = new Answer(
       {
         ...props,
-        attachmentsIds: props.attachmentsIds ?? new AnswerAttachmentList(),
+        attachments: props.attachments ?? new AnswerAttachmentList(),
         createdAt: new Date()
       },
       id
