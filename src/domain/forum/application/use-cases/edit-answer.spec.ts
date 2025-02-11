@@ -68,7 +68,8 @@ describe("EditAnswerUseCase", () => {
     const result = await sut.execute({
       answerId: "answer-1",
       authorId: "author-2",
-      content: "new content"
+      content: "new content",
+      attachmentsIds: []
     });
 
     expect(result.isLeft()).toBeTruthy();
