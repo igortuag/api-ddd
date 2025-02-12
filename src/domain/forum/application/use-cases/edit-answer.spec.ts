@@ -46,12 +46,22 @@ describe("EditAnswerUseCase", () => {
       answerId: "answer-1",
       authorId: "author-1",
       content: "new content",
-      attachmentsIds: ["1", "2"]
+      attachmentsIds: ["1", "3"]
     });
 
     const answer = await inMemoryAnswersRepository.findById("answer-1");
 
     expect(answer?.content).toBe("new content");
+
+    expect(
+      inMemoryAnswersRepository.items[0].attachments.currentItems
+    ).toHaveLength(2);
+    expect(inMemoryAnswersRepository.items[0].attachments.currentItems).toEqual(
+      [
+        expect.objectContaining({ attachmentId: new UniqueEntityID("1") }),
+        expect.objectContaining({ attachmentId: new UniqueEntityID("3") })
+      ]
+    );
   });
 
   it("should not be able to edit a answer if the author is different", async () => {
