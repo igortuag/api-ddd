@@ -2,12 +2,16 @@ import { InMemoryAnswersRepository } from "test/respositories/in-memory-answers-
 import { DeleteAnswerUseCase } from "./delete-answer";
 import { makeAnswer } from "test/factories/make-answer";
 import { UniqueEntityID } from "@/core/entities/unique-entity-id";
+import { InMemoryAnswerAttachmentsRepository } from "test/respositories/in-memory-answer-attachments-repository";
 
+let inMemoryAnswerAttachmentsRepository: InMemoryAnswerAttachmentsRepository;
 let inMemoryAnswersRepository: InMemoryAnswersRepository;
 let sut: DeleteAnswerUseCase;
 
 describe("DeleteAnswerUseCase", () => {
   beforeEach(() => {
+    inMemoryAnswerAttachmentsRepository =
+      new InMemoryAnswerAttachmentsRepository();
     inMemoryAnswersRepository = new InMemoryAnswersRepository();
     sut = new DeleteAnswerUseCase(inMemoryAnswersRepository);
   });
