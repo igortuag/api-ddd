@@ -5,7 +5,7 @@ import { AnswerAttachmentList } from "./answer-attachment-list";
 
 export interface AnswerProps {
   authorId: UniqueEntityID;
-  questionId: UniqueEntityID;
+  answerId: UniqueEntityID;
   attachments: AnswerAttachmentList;
   content: string;
   createdAt: Date;
@@ -21,8 +21,8 @@ export class Answer extends Entity<AnswerProps> {
     return this.props.authorId;
   }
 
-  get questionId() {
-    return this.props.questionId;
+  get answerId() {
+    return this.props.answerId;
   }
 
   get attachments() {
@@ -59,7 +59,7 @@ export class Answer extends Entity<AnswerProps> {
     props: Optional<AnswerProps, "createdAt" | "attachments">,
     id?: UniqueEntityID
   ) {
-    const question = new Answer(
+    const answer = new Answer(
       {
         ...props,
         attachments: props.attachments ?? new AnswerAttachmentList(),
@@ -68,6 +68,6 @@ export class Answer extends Entity<AnswerProps> {
       id
     );
 
-    return question;
+    return answer;
   }
 }
