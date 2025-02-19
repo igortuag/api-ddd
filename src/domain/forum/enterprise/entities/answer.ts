@@ -5,7 +5,7 @@ import { AnswerAttachmentList } from "./answer-attachment-list";
 
 export interface AnswerProps {
   authorId: UniqueEntityID;
-  answerId: UniqueEntityID;
+  questionId: UniqueEntityID;
   attachments: AnswerAttachmentList;
   content: string;
   createdAt: Date;
@@ -21,8 +21,8 @@ export class Answer extends Entity<AnswerProps> {
     return this.props.authorId;
   }
 
-  get answerId() {
-    return this.props.answerId;
+  get questionId() {
+    return this.props.questionId;
   }
 
   get attachments() {
