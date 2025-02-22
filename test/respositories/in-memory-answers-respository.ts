@@ -18,7 +18,7 @@ export class InMemoryAnswersRepository implements AnswersRepository {
     params: { page: number }
   ): Promise<Answer[]> {
     return this.items
-      .filter((answer) => answer.answerId.toString() === answerId)
+      .filter((answer) => answer.id.toString() === answerId)
       .slice((params.page - 1) * 10, params.page * 10);
   }
 
