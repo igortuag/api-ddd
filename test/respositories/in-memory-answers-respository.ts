@@ -6,7 +6,7 @@ export class InMemoryAnswersRepository implements AnswersRepository {
   public items: Answer[] = [];
 
   constructor(
-    private answerAttachmentsRepository: AnswerAttachmentsRepository
+    readonly answerAttachmentsRepository: AnswerAttachmentsRepository
   ) {}
 
   async findById(id: string): Promise<Answer | null> {
