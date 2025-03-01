@@ -31,8 +31,8 @@ describe("Get Question By Slug", () => {
 
     expect(result.isRight()).toBeTruthy();
     if (result.isRight()) {
-      const { question } = result.value;
-      expect(inMemoryQuestionsRepository.items[0].id).toEqual(question.id);
+      expect(result.value?.question.id).toEqual(newQuestion.id);
+      expect(result.value?.question.title).toEqual(newQuestion.title);
     }
   });
 });
