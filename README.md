@@ -45,3 +45,9 @@ DDD (Domain-driven Design)
 
 - Title and content is simple (just updated)
 - Attachment is complex: (delete, add, update)
+
+## Subdomain
+
+- Core
+- Supporting
+- Generic
