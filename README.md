@@ -49,13 +49,16 @@ DDD (Domain-driven Design)
 ## Subdomain
 
 - Core: what the business is pay for
-- Supporting
+- Supporting: support the core domains
 - Generic
 
 ### Examples
 
+#### Core
 - Purchase
 - Catalogue
-- Stock
 - Payment
 - Delivery
+
+#### Supporting
+- Stock
