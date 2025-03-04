@@ -50,7 +50,7 @@ DDD (Domain-driven Design)
 
 - Core: what the business is pay for
 - Supporting: support the core domains
-- Generic
+- Generic: nice to have but not required
 
 ### Examples
 
@@ -62,3 +62,8 @@ DDD (Domain-driven Design)
 
 #### Supporting
 - Stock
+
+#### Generic
+- Alerts
+- Sales
+- Chat
