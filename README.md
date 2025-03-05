@@ -59,6 +59,7 @@ DDD (Domain-driven Design)
 - Catalogue
 - Payment
 - Delivery
+- Invoicing
 
 #### Supporting
 - Stock
