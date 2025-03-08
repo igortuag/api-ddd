@@ -1,5 +1,6 @@
 import { Entity } from "@/core/entities/entity";
 import { UniqueEntityID } from "@/core/entities/unique-entity-id";
+import { Optional } from "@/core/types/optional";
 
 interface NotificationProps {
   recipientId: UniqueEntityID;
@@ -24,5 +25,20 @@ export class Notification extends Entity<NotificationProps> {
   }
   get readAt() {
     return this.props.readAt;
+  }
+
+  static create(
+    props: Optional<NotificationProps, "createdAt">,
+    id?: UniqueEntityID
+  ): Notification {
+    const notification = new Notification(
+      {
+        ...props,
+        createdAt: props.createdAt ?? new Date()
+      },
+      id
+    );
+
+    return notification;
   }
 }
