@@ -1,37 +1,25 @@
-import { UniqueEntityID } from "@/core/entities/unique-entity-id";
-import { Either, right } from "@/core/either";
-import { Notification } from "../../enterprise/entities/notification";
-import { NotificationsRepository } from "../repositories/notification-repository";
+import { InMemoryNotificationsRepository } from "test/respositories/in-memory-notification-respository";
+import { SendNotificationUseCase } from "./send-notification";
 
-interface SendNotificationUseCaseRequest {
-  recipientId: string;
-  title: string;
-  content: string;
-}
+let inMemoryNotificationsRepository: InMemoryNotificationsRepository;
+let sut: SendNotificationUseCase;
 
-type SendNotificationUseCaseResponse = Either<
-  null,
-  {
-    notification: Notification;
-  }
->;
+describe("SendNotificationUseCase", () => {
+  beforeEach(() => {
+    inMemoryNotificationsRepository = new InMemoryNotificationsRepository();
+    sut = new SendNotificationUseCase(inMemoryNotificationsRepository);
+  });
 
-export class SendNotificationUseCase {
-  constructor(private notificationRepository: NotificationsRepository) {}
-
-  async execute({
-    recipientId,
-    title,
-    content
-  }: SendNotificationUseCaseRequest): Promise<SendNotificationUseCaseResponse> {
-    const notification = await Notification.create({
-      recipientId: new UniqueEntityID(recipientId),
-      title,
-      content
+  it("should be able to send an notification", async () => {
+    const result = await sut.execute({
+      recipientId: "author-id",
+      title: "notification title",
+      content: "notification content"
     });
 
-    await this.notificationRepository.create(notification);
-
-    return right({ notification });
-  }
-}
+    expect(result.isRight).toBeTruthy();
+    expect(inMemoryNotificationsRepository.items[0]).toEqual(
+      result.value?.notification
+    );
+  });
+});
