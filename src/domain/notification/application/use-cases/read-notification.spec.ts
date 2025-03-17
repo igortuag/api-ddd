@@ -26,4 +26,24 @@ describe("ReadNotificationUseCase", () => {
       expect.any(Date)
     );
   });
+
+  it("should not be able to read a notification if the author is different", async () => {
+    const newNotification = makeNotification(
+      {
+        recipientId: new UniqueEntityID("author-1")
+      },
+      new UniqueEntityID("Notification-1")
+    );
+
+    await inMemoryNotificationsRepository.create(newNotification);
+
+
+
+    const result = await sut.execute({
+      notificationId: "Notification-1",
+      recipientId: "author-2"
+    });
+
+    expect(result.isLeft()).toBe(true);
+  });
 });
