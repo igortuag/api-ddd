@@ -33,7 +33,7 @@ export class DomainEvents {
   private static findMarkedAggregateByID(
     id: UniqueEntityID
   ): AggregateRoot<any> | undefined {
-    return this.markedAggregates.find((aggregate) => aggregate.id.equals(id));
+    return this.markedAggregates.find((aggregate) => aggregate.equals(id));
   }
 
   public static dispatchEventsForAggregate(id: UniqueEntityID) {
