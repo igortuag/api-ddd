@@ -2,6 +2,7 @@ import { AggregateRoot } from "../entities/aggregate-root";
 import { UniqueEntityID } from "../entities/unique-entity-id";
 import { DomainEvent } from "./domain-event";
 import { DomainEvents } from "./domain-events";
+import { vi } from "vitest";
 
 class CustomAggregateCreated implements DomainEvent {
   public occurredAt: Date;
@@ -29,9 +30,16 @@ class CustomAggregate extends AggregateRoot<any> {
 
 describe("domain events", () => {
   it("should be able to dispatch and listen to events", () => {
-    DomainEvents.register(() => {}, CustomAggregateCreated.name);
+    const callbackSpy = vi.fn();
+
+    DomainEvents.register(callbackSpy, CustomAggregateCreated.name);
     const aggregate = CustomAggregate.create();
 
     expect(aggregate.domainEvents.length).toBe(1);
+
+    DomainEvents.dispatchEventsForAggregate(aggregate.id);
+
+    expect(callbackSpy).toBeCalled();
+    expect(aggregate.domainEvents.length).toBe(0);
   });
 });
