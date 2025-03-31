@@ -8,6 +8,11 @@ export class OnAnswerCreated implements EventHandler {
   }
 
   setupSubscriptions(): void {
-    DomainEvents.register(() => {}, AnswerCreatedEvent.name);
+    DomainEvents.register(
+      this.sendNewAnswerNotification.bind(this),
+      AnswerCreatedEvent.name
+    );
   }
+
+  private async sendNewAnswerNotification(event: AnswerCreatedEvent) {}
 }
