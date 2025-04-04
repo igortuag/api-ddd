@@ -1,9 +1,10 @@
 import { DomainEvents } from "@/core/events/domain-events";
 import { EventHandler } from "@/core/events/event-handler";
 import { AnswerCreatedEvent } from "../../enterprise/events/answer-created-event";
+import { QuestionsRepository } from "../repositories/question-repository";
 
 export class OnAnswerCreated implements EventHandler {
-  constructor() {
+  constructor(private questionRepository: QuestionsRepository) {
     this.setupSubscriptions();
   }
 
@@ -14,5 +15,9 @@ export class OnAnswerCreated implements EventHandler {
     );
   }
 
-  private async sendNewAnswerNotification(event: AnswerCreatedEvent) {}
+  private async sendNewAnswerNotification({ answer }: AnswerCreatedEvent) {
+    const question = await this.questionRepository.findById(
+      answer.questionId.toString()
+    );
+  }
 }
