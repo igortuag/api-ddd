@@ -1,42 +1,53 @@
-import { makeAnswer } from "test/factories/make-answer";
-import { OnAnswerCreated } from "./on-answer-created";
-import { InMemoryAnswersRepository } from "test/respositories/in-memory-answers-respository";
-import { InMemoryAnswerAttachmentsRepository } from "test/respositories/in-memory-answer-attachments-repository";
-import { InMemoryQuestionAttachmentsRepository } from "test/respositories/in-memory-question-attachments-repository";
-import { InMemoryQuestionsRepository } from "test/respositories/in-memory-questions-respository";
-import { SendNotificationUseCase } from "@/domain/notification/application/use-cases/send-notification";
-import { InMemoryNotificationsRepository } from "test/respositories/in-memory-notification-respository";
+import { makeAnswer } from 'test/factories/make-answer'
+import { OnAnswerCreated } from './on-answer-created'
+import { InMemoryAnswersRepository } from 'test/respositories/in-memory-answers-respository'
+import { InMemoryAnswerAttachmentsRepository } from 'test/respositories/in-memory-answer-attachments-repository'
+import { InMemoryQuestionAttachmentsRepository } from 'test/respositories/in-memory-question-attachments-repository'
+import { InMemoryQuestionsRepository } from 'test/respositories/in-memory-questions-respository'
+import { SendNotificationUseCase } from '@/domain/notification/application/use-cases/send-notification'
+import { InMemoryNotificationsRepository } from 'test/respositories/in-memory-notification-respository'
+import { makeQuestion } from 'test/factories/make-question'
 
-let inMemoryQuestionAttachmentsRepository: InMemoryQuestionAttachmentsRepository;
-let inMemoryQuestionsRepository: InMemoryQuestionsRepository;
-let inMemoryAnswerAttachmentsRepository: InMemoryAnswerAttachmentsRepository;
-let inMemoryAnswersRepository: InMemoryAnswersRepository;
-let inMemoryNotificationsRepository: InMemoryNotificationsRepository;
-let sendNotificationUseCase: SendNotificationUseCase;
+let inMemoryQuestionAttachmentsRepository: InMemoryQuestionAttachmentsRepository
+let inMemoryQuestionsRepository: InMemoryQuestionsRepository
+let inMemoryAnswerAttachmentsRepository: InMemoryAnswerAttachmentsRepository
+let inMemoryAnswersRepository: InMemoryAnswersRepository
+let inMemoryNotificationsRepository: InMemoryNotificationsRepository
+let sendNotificationUseCase: SendNotificationUseCase
 
-describe("On Answer Created", () => {
+let sendNotificationSpy: ReturnType<typeof vi.spyOn>
+
+describe('On Answer Created', () => {
   beforeEach(() => {
     inMemoryQuestionAttachmentsRepository =
-      new InMemoryQuestionAttachmentsRepository();
+      new InMemoryQuestionAttachmentsRepository()
     inMemoryQuestionsRepository = new InMemoryQuestionsRepository(
-      inMemoryQuestionAttachmentsRepository
-    );
+      inMemoryQuestionAttachmentsRepository,
+    )
     inMemoryAnswerAttachmentsRepository =
-      new InMemoryAnswerAttachmentsRepository();
+      new InMemoryAnswerAttachmentsRepository()
     inMemoryAnswersRepository = new InMemoryAnswersRepository(
-      inMemoryAnswerAttachmentsRepository
-    );
-    inMemoryNotificationsRepository = new InMemoryNotificationsRepository();
+      inMemoryAnswerAttachmentsRepository,
+    )
+    inMemoryNotificationsRepository = new InMemoryNotificationsRepository()
     sendNotificationUseCase = new SendNotificationUseCase(
-      inMemoryNotificationsRepository
-    );
-  });
+      inMemoryNotificationsRepository,
+    )
 
-  it("should send a notification when an answer is created", async () => {
-    const onAnswerCreated = new OnAnswerCreated();
+    sendNotificationSpy = vi.spyOn(sendNotificationUseCase, 'execute')
 
-    const answer = makeAnswer();
+    new OnAnswerCreated(inMemoryQuestionsRepository, sendNotificationUseCase)
+  })
 
-    inMemoryAnswersRepository.create(answer);
-  });
-});
+  it('should send a notification when an answer is created', async () => {
+    const question = makeQuestion()
+    const answer = makeAnswer({
+      questionId: question.id,
+    })
+
+    inMemoryQuestionsRepository.create(question)
+    inMemoryAnswersRepository.create(answer)
+
+    expect(sendNotificationSpy).toHaveBeenCalledTimes(1)
+  })
+})
