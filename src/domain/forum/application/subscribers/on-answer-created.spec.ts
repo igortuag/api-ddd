@@ -7,6 +7,8 @@ import { InMemoryQuestionsRepository } from 'test/respositories/in-memory-questi
 import { SendNotificationUseCase } from '@/domain/notification/application/use-cases/send-notification'
 import { InMemoryNotificationsRepository } from 'test/respositories/in-memory-notification-respository'
 import { makeQuestion } from 'test/factories/make-question'
+import { waitFor } from 'test/utils/wait-for'
+import { MockInstance } from 'vitest'
 
 let inMemoryQuestionAttachmentsRepository: InMemoryQuestionAttachmentsRepository
 let inMemoryQuestionsRepository: InMemoryQuestionsRepository
@@ -15,7 +17,7 @@ let inMemoryAnswersRepository: InMemoryAnswersRepository
 let inMemoryNotificationsRepository: InMemoryNotificationsRepository
 let sendNotificationUseCase: SendNotificationUseCase
 
-let sendNotificationSpy: ReturnType<typeof vi.spyOn>
+let sendNotificationSpy: MockInstance
 
 describe('On Answer Created', () => {
   beforeEach(() => {
@@ -48,6 +50,6 @@ describe('On Answer Created', () => {
     inMemoryQuestionsRepository.create(question)
     inMemoryAnswersRepository.create(answer)
 
-    expect(sendNotificationSpy).toHaveBeenCalledTimes(1)
+    await waitFor(() => expect(sendNotificationSpy).toHaveBeenCalledTimes(1))
   })
 })
