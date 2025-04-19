@@ -1,49 +1,49 @@
-import { DomainEvents } from "@/core/events/domain-events";
-import { AnswerAttachmentsRepository } from "@/domain/forum/application/repositories/answer-attachments-repository";
-import { AnswersRepository } from "@/domain/forum/application/repositories/answer-repository";
-import { Answer } from "@/domain/forum/enterprise/entities/answer";
+import { DomainEvents } from '@/core/events/domain-events'
+import { AnswerAttachmentsRepository } from '@/domain/forum/application/repositories/answer-attachments-repository'
+import { AnswersRepository } from '@/domain/forum/application/repositories/answer-repository'
+import { Answer } from '@/domain/forum/enterprise/entities/answer'
 
 export class InMemoryAnswersRepository implements AnswersRepository {
-  public items: Answer[] = [];
+  public items: Answer[] = []
 
   constructor(
-    readonly answerAttachmentsRepository: AnswerAttachmentsRepository
+    readonly answerAttachmentsRepository: AnswerAttachmentsRepository,
   ) {}
 
   async findById(id: string): Promise<Answer | null> {
-    return this.items.find((answer) => answer.id.toString() === id) || null;
+    return this.items.find((answer) => answer.id.toString() === id) || null
   }
 
   async findManyByAnswerId(
     answerId: string,
-    params: { page: number }
+    params: { page: number },
   ): Promise<Answer[]> {
     return this.items
       .filter((answer) => answer.id.toString() === answerId)
-      .slice((params.page - 1) * 10, params.page * 10);
+      .slice((params.page - 1) * 10, params.page * 10)
   }
 
   async delete(answer: Answer): Promise<void> {
-    this.items = this.items.filter((a) => a.id !== answer.id);
+    this.items = this.items.filter((a) => a.id !== answer.id)
 
     await this.answerAttachmentsRepository.deleteManyByAnswerId(
-      answer.id.toString()
-    );
+      answer.id.toString(),
+    )
   }
 
   async save(answer: Answer): Promise<void> {
-    const index = this.items.findIndex((a) => a.id === answer.id);
+    const index = this.items.findIndex((a) => a.id === answer.id)
 
-    this.items[index] = answer;
+    this.items[index] = answer
 
-    DomainEvents.dispatchEventsForAggregate(answer.id);
+    DomainEvents.dispatchEventsForAggregate(answer.id)
   }
 
   async create(answer: Answer): Promise<Answer> {
-    this.items.push(answer);
+    this.items.push(answer)
 
-    DomainEvents.dispatchEventsForAggregate(answer.id);
+    DomainEvents.dispatchEventsForAggregate(answer.id)
 
-    return answer;
+    return answer
   }
 }
