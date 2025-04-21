@@ -12,12 +12,11 @@ let sut: DeleteQuestionUseCase
 
 describe('DeleteQuestionUseCase', () => {
   beforeEach(() => {
+    inMemoryQuestionAttachmentsRepository =
+      new InMemoryQuestionAttachmentsRepository()
     inMemoryQuestionsRepository = new InMemoryQuestionsRepository(
       inMemoryQuestionAttachmentsRepository,
     )
-    inMemoryQuestionAttachmentsRepository =
-      new InMemoryQuestionAttachmentsRepository()
-
     sut = new DeleteQuestionUseCase(inMemoryQuestionsRepository)
   })
 
@@ -32,8 +31,8 @@ describe('DeleteQuestionUseCase', () => {
     await inMemoryQuestionsRepository.create(newQuestion)
 
     await sut.execute({
-      questionId: 'question-1',
-      authorId: 'author-1',
+      questionId: newQuestion.id.toString(),
+      authorId: newQuestion.authorId.toString(),
     })
 
     expect(inMemoryQuestionsRepository.items).toHaveLength(0)
@@ -42,9 +41,9 @@ describe('DeleteQuestionUseCase', () => {
   it('should be able to delete a question', async () => {
     const newQuestion = makeQuestion(
       {
-        authorId: new UniqueEntityID('author-1'),
+        authorId: new UniqueEntityID('author-2'),
       },
-      new UniqueEntityID('question-1'),
+      new UniqueEntityID('question-2'),
     )
 
     await inMemoryQuestionsRepository.create(newQuestion)
@@ -62,7 +61,7 @@ describe('DeleteQuestionUseCase', () => {
 
     await sut.execute({
       questionId: newQuestion.id.toString(),
-      authorId: 'author-1',
+      authorId: 'author-2',
     })
 
     expect(inMemoryQuestionsRepository.items).toHaveLength(0)
@@ -72,15 +71,15 @@ describe('DeleteQuestionUseCase', () => {
   it('should not be able to delete a question if the author is different', async () => {
     const newQuestion = makeQuestion(
       {
-        authorId: new UniqueEntityID('author-1'),
+        authorId: new UniqueEntityID('author-3'),
       },
-      new UniqueEntityID('question-1'),
+      new UniqueEntityID('question-3'),
     )
 
     await inMemoryQuestionsRepository.create(newQuestion)
 
     const result = await sut.execute({
-      questionId: 'question-1',
+      questionId: 'question-3',
       authorId: 'author-2',
     })
 
