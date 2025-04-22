@@ -1,42 +1,40 @@
-import { InMemoryQuestionsRepository } from "test/respositories/in-memory-questions-respository";
-import { CreateQuestionUseCase } from "./create-question";
-import { UniqueEntityID } from "@/core/entities/unique-entity-id";
-import { InMemoryQuestionAttachmentsRepository } from "test/respositories/in-memory-question-attachments-repository";
+import { InMemoryQuestionsRepository } from 'test/respositories/in-memory-questions-respository'
+import { CreateQuestionUseCase } from './create-question'
+import { UniqueEntityID } from '@/core/entities/unique-entity-id'
+import { InMemoryQuestionAttachmentsRepository } from 'test/respositories/in-memory-question-attachments-repository'
 
-let inMemoryQuestionAttachmentsRepository: InMemoryQuestionAttachmentsRepository;
-let inMemoryQuestionsRepository: InMemoryQuestionsRepository;
-let sut: CreateQuestionUseCase;
+let inMemoryQuestionAttachmentsRepository: InMemoryQuestionAttachmentsRepository
+let inMemoryQuestionsRepository: InMemoryQuestionsRepository
+let sut: CreateQuestionUseCase
 
-describe("CreateQuestionUseCase", () => {
+describe('CreateQuestionUseCase', () => {
   beforeEach(() => {
     inMemoryQuestionAttachmentsRepository =
-      new InMemoryQuestionAttachmentsRepository();
+      new InMemoryQuestionAttachmentsRepository()
     inMemoryQuestionsRepository = new InMemoryQuestionsRepository(
-      inMemoryQuestionAttachmentsRepository
-    );
-    sut = new CreateQuestionUseCase(inMemoryQuestionsRepository);
-  });
+      inMemoryQuestionAttachmentsRepository,
+    )
+    sut = new CreateQuestionUseCase(inMemoryQuestionsRepository)
+  })
 
-  it("should be able to create an question", async () => {
+  it('should be able to create an question', async () => {
     const result = await sut.execute({
-      authorId: "author-id",
-      title: "question title",
-      content: "question content",
-      attachmentsIds: ["1", "2"]
-    });
+      authorId: 'author-id',
+      title: 'question title',
+      content: 'question content',
+      attachmentsIds: ['1', '2'],
+    })
 
-    expect(result.isRight).toBeTruthy();
-    expect(inMemoryQuestionsRepository.items[0]).toEqual(
-      result.value?.question
-    );
+    expect(result.isRight).toBeTruthy()
+    expect(inMemoryQuestionsRepository.items[0]).toEqual(result.value?.question)
     expect(
-      inMemoryQuestionsRepository.items[0].attachments.currentItems
-    ).toHaveLength(2);
+      inMemoryQuestionsRepository.items[0].attachments.currentItems,
+    ).toHaveLength(2)
     expect(
-      inMemoryQuestionsRepository.items[0].attachments.currentItems
+      inMemoryQuestionsRepository.items[0].attachments.currentItems,
     ).toEqual([
-      expect.objectContaining({ attachmentId: new UniqueEntityID("1") }),
-      expect.objectContaining({ attachmentId: new UniqueEntityID("2") })
-    ]);
-  });
-});
+      expect.objectContaining({ attachmentId: new UniqueEntityID('1') }),
+      expect.objectContaining({ attachmentId: new UniqueEntityID('2') }),
+    ])
+  })
+})
