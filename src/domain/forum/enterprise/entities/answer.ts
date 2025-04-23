@@ -1,4 +1,3 @@
-import { Entity } from '@/core/entities/entity'
 import { Optional } from '@/core/types/optional'
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { AnswerAttachmentList } from './answer-attachment-list'
@@ -41,6 +40,10 @@ export class Answer extends AggregateRoot<AnswerProps> {
 
   get excerpt() {
     return this.content.substring(0, 120).trimEnd().concat('...')
+  }
+
+  get attachmentsIds() {
+    return this.attachmentsIds
   }
 
   private touch() {
