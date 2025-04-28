@@ -63,6 +63,7 @@ DDD (Domain-driven Design)
 
 #### Supporting
 - Stock
+- Contact us
 
 #### Generic
 - Alerts

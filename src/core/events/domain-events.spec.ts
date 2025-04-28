@@ -4,6 +4,18 @@ import { DomainEvent } from './domain-event'
 import { DomainEvents } from './domain-events'
 import { vi } from 'vitest'
 
+interface CustomAggregateProps {}
+
+class CustomAggregate extends AggregateRoot<CustomAggregateProps> {
+  static create() {
+    const aggregate = new CustomAggregate({})
+
+    aggregate.addDomainEvent(new CustomAggregateCreated(aggregate))
+
+    return aggregate
+  }
+}
+
 class CustomAggregateCreated implements DomainEvent {
   public occurredAt: Date
   readonly aggregate: CustomAggregate
@@ -15,16 +27,6 @@ class CustomAggregateCreated implements DomainEvent {
 
   public getAggregateId(): UniqueEntityID {
     return this.aggregate.id
-  }
-}
-
-class CustomAggregate extends AggregateRoot<any> {
-  static create() {
-    const aggregate = new CustomAggregate(null)
-
-    aggregate.addDomainEvent(new CustomAggregateCreated(aggregate))
-
-    return aggregate
   }
 }
 
