@@ -1,71 +1,118 @@
-DDD (Domain-driven Design)
+# DDD & Clean Architecture Study
 
-## Domain
+**Brief Description**: A study project applying Domain-Driven Design (DDD) and Clean Architecture to model a [describe the domain, e.g., "customer support chat system"].
 
-- Domain Experts
-  - Chat
-- Ubiquitous language
+## 📌 Domain-Driven Design (DDD)
 
-- User
-  - Customer
-  - Supplier
-  - Attendant
+### Core Domain
+- **Chat**: Communication system between customers, attendants, and suppliers.
 
-- Aggregates
-- Object Value
-- Domain Event
-- Subdomain (Bounded Contexts)
-- Entities
-- Use Cases
+### Ubiquitous Language
+- **User**: Base entity for all system participants.
+  - **Customer**: User requesting support via chat.
+  - **Supplier**: User providing technical/product support.
+  - **Attendant**: User mediating communication between Customer and Supplier.
 
-## Clean Architecture 
+### Domain Structure
+| Concept           | Description                                                                 | Domain Example                     |
+|-------------------|-----------------------------------------------------------------------------|------------------------------------|
+| **Aggregates**    | Consistency boundaries with root entities                                   | `Order` (root) → `OrderItem[]`     |
+| **Entities**      | Objects with unique identity and business logic                            | `User`, `ChatSession`              |
+| **Value Objects** | Immutable objects defined by attributes                                     | `Address`, `PaymentDetails`        |
+| **Domain Events** | Events representing meaningful business occurrences                       | `ChatStarted`, `OrderCompleted`    |
+| **Repositories**  | Interfaces for persistent storage abstraction                              | `IUserRepository`, `IChatRepository` |
+| **Services**      | Stateless operations that don’t fit in entities/VOs                        | `ChatNotificationService`          |
 
-- Decoupling
-- Dependency inversion
+### Bounded Contexts (Subdomains)
+| Type          | Description                                  | Examples                          |
+|---------------|----------------------------------------------|-----------------------------------|
+| **Core**      | Critical business differentiators           | Chat, Order Processing           |
+| **Supporting**| Auxiliary but necessary functionalities     | User Management, Analytics        |
+| **Generic**   | Common solutions with no competitive edge   | Logging, Email Notifications      |
 
-# Concepts
+---
 
-- Aggregate
-- WatchedList
+## 🏗️ Clean Architecture
 
-## Examples
+### Principles
+- **Decoupling**: Layers depend on abstractions, not implementations.
+- **Dependency Rule**: Inner layers (Domain) have no knowledge of outer layers (Infra/UI).
+- **Testability**: Business logic is isolated from frameworks/databases.
 
-- Oder -> OrderItem[]
-- Order -> Shipping
+### Layers
+1. **Domain Layer**  
+   - Entities, Aggregates, Value Objects, Domain Services.  
+   - Pure business logic, no external dependencies.
 
-- Question -> Attachment[] (Aggregate)
+2. **Application Layer**  
+   - Use Cases, DTOs, Command/Query handlers.  
+   - Orchestrates domain objects (thin layer).
 
-### Create
+3. **Infrastructure Layer**  
+   - Implements interfaces from inner layers (e.g., databases, APIs).  
+   - Example: `EFCoreUserRepository` → `IUserRepository`.
 
-- Title
-- Content
-- Attachment
+4. **Presentation Layer**  
+   - UI/API endpoints (e.g., REST controllers, WebSocket handlers).  
 
-### Edit
+---
 
-- Title and content is simple (just updated)
-- Attachment is complex: (delete, add, update)
+## 🛠️ Key Concepts & Patterns
 
-## Subdomain
+### Aggregates
+- **Example**:  
+  ```plaintext
+  Order (Aggregate Root)
+  ├── OrderItems (Value Objects)
+  └── Shipping (Entity)
+  ```
+- **Invariants**: Rules enforced by the root (e.g., "Order must have ≥1 item").
 
-- Core: what the business is pay for
-- Supporting: support the core domains
-- Generic: nice to have but not required
+### WatchedList Pattern
+- Tracks changes to collections (add/remove/update) for transactional updates.  
+- **Use Case**:  
+  ```csharp
+  // Editing a Question with Attachments
+  question.UpdateAttachments(new[] { "file1.pdf" }, deleted: ["file2.pdf"]);
+  ```
 
-### Examples
+---
 
-#### Core
-- Purchase
-- Catalogue
-- Payment
-- Delivery
-- Invoicing
+## 📂 Project Structure (Example)
+```
+src/
+├── Domain/               # Core business logic
+│   ├── Users/            # Bounded Context
+│   │   ├── Entities/
+│   │   ├── Aggregates/
+│   │   └── Services/
+│   └── Chat/             # Bounded Context
+│       ├── Events/
+│       └── ValueObjects/
+├── Application/          # Use Cases & DTOs
+├── Infrastructure/       # DB, External Services
+└── Presentation/         # API/UI
+```
 
-#### Supporting
-- Stock
-- Contact us
+---
 
-#### Generic
-- Alerts
-- Sales
-- Chat
+## 🎯 Use Cases
+1. **Start a Chat Session**  
+   - Actors: Customer, Attendant.  
+   - Flow: `ChatSession.Create()` → `ChatStartedEvent` → `NotifySupplier()`.  
+
+2. **Edit Question with Attachments**  
+   - Complexity: Handle concurrent attachment updates via `WatchedList`.
+
+---
+
+## 🔗 Dependencies
+- **Domain**: Zero external dependencies.  
+- **Application**: Depends only on `Domain`.  
+- **Infrastructure**: Depends on `Application`/`Domain` (implements their interfaces).  
+
+---
+
+## 📚 Further Reading
+- [Domain-Driven Design by Eric Evans](https://dddcommunity.org/book/evans_2003/)  
+- [Clean Architecture by Robert C. Martin](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)  
